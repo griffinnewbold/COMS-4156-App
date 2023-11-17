@@ -1,13 +1,13 @@
-package com.dev.sweproject.sweclientapp;
+package com.dev.sweproject;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SweClientAppApplicationTests {
+class ClientApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+  @Test
+  void contextLoads() {
+  }
 
 }
