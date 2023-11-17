@@ -27,10 +27,10 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      working-directory: ./backend/SweClientApp
+      working-directory: ./ClientApplication
       run: mvn -B package --file pom.xml
     - name: Run JUnit tests with Maven
-      working-directory: ./backend/SweClientApp
+      working-directory: ./ClientApplication
       run: mvn test
 
     #- name: Update dependency graph
