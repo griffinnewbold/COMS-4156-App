@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class MainController {
 
+  @GetMapping({"/", "/index", "/home"})
+  public String index() {
+    return "index";
+  }
+
   @GetMapping("/register")
   public String showForm(Model model) {
     User user = new User();
