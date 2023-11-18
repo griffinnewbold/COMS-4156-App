@@ -36,9 +36,9 @@ jobs:
       uses: danielpalme/ReportGenerator-GitHub-Action@5.2.0
       with:
         # The coverage reports that should be parsed (separated by semicolon). Globbing is supported.
-        reports: target/site/jacoco/jacoco.xml
+        reports: ClientApplication/target/site/jacoco/jacoco.xml
         reporttypes: HtmlInline;Cobertura;TextSummary
-        sourcedirs: src/main/java/com/dev/sweproject
+        sourcedirs: ClientApplication/src/main/java/com/dev/sweproject
         title: JaCoCo code coverage report
     - name: JaCoCoSummary
       run: cat coveragereport/Summary.txt
