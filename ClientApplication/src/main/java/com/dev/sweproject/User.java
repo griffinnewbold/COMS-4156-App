@@ -3,6 +3,7 @@ package com.dev.sweproject;
 import java.sql.Date;
 
 public class User {
+
   private String name;
   private String email;
   private String password;
@@ -78,8 +79,9 @@ public class User {
 
   @Override
   public String toString() {
-    return "User [name=" + name + ", email=" + email + ", password=" + password + ", gender=" + gender + ", note="
-        + note + ", married=" + married + ", birthday=" + birthday + ", profession=" + profession + "]";
+    return "User [name=" + name + ", email=" + email + ", password=" + password + ", gender="
+        + gender + ", note=" + note + ", married=" + married + ", birthday=" + birthday
+        + ", profession=" + profession + "]";
   }
 
 }
