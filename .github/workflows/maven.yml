@@ -32,6 +32,13 @@ jobs:
     - name: Run JUnit tests with Maven
       working-directory: ./ClientApplication
       run: mvn test
-
-    #- name: Update dependency graph
-    #  uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+    - name: ReportGenerator
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.2.0
+      with:
+        # The coverage reports that should be parsed (separated by semicolon). Globbing is supported.
+        reports: target/site/jacoco/jacoco.xml
+        reporttypes: HtmlInline;Cobertura;TextSummary
+        sourcedirs: src/main/java/com/dev/sweproject
+        title: JaCoCo code coverage report
+    - name: JaCoCoSummary
+      run: cat coveragereport/Summary.txt
