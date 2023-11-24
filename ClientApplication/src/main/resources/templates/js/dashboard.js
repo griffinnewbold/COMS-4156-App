@@ -69,6 +69,31 @@ function fetch_docs()
     render_docs("");
 }
 
+function logout()
+{
+    location.href = "index.html";
+}
+
+function upload()
+{
+    // Steps:
+    // 1. make sure the user selected a file
+    // 2. make sure the user gave a name
+    // 3. try and update!
+
+    const filepicker = document.getElementById('filepicker');
+    if (filepicker.files.length == 0) {
+        alert("You must select a document to upload.");
+        return;
+    }
+
+    let name = $('#name').val();
+    if (name.length == 0) {
+        alert("You must provide a name for your document to upload.");
+        return;
+    }
+}
+
 $(document).ready(() => {
     fetch_docs();
 });
