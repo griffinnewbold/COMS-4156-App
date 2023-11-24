@@ -4,11 +4,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.client.HttpClientErrorException;
 
 import static com.dev.sweproject.GlobalInfo.*;
 
@@ -69,6 +73,8 @@ public class MainController {
       boolean isSuccessful = result.get();
 
       if (isSuccessful) {
+        String jsonString = retrieveDocuments(email.substring(0, email.indexOf('@')));
+        System.out.println(jsonString);
         return "dashboard";
       }
       model.addAttribute("error", "Invalid credentials");
@@ -90,12 +96,31 @@ public class MainController {
       return "login_form";
     } catch (Exception e) {
       System.out.println(e.getMessage());
-      System.out.println(e);
       return "error";
     }
   }
 
+  public String retrieveDocuments(String userId) {
+    String fullUrl = SERVICE_IP + RETRIEVE_URI + "?network-id=" + NETWORK_ID + "&user-id=" + userId;
+
+    try {
+      ResponseEntity<String> response = restTemplate.getForEntity(fullUrl, String.class);
+
+      if (response.getStatusCode().is2xxSuccessful()) {
+        return response.getBody();
+      }
+
+    } catch (HttpClientErrorException e) {
+      System.out.println("HTTP error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
+    } catch (Exception e) {
+      System.out.println("Unexpected error: " + e.getMessage());
+    }
+    return "";
+  }
+
+
   /*
+  @GetMapping
   @GetMapping("/check-for-doc")
   @GetMapping("/see-previous")
   @GetMapping("/see-stats")
