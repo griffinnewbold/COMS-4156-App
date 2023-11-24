@@ -38,9 +38,21 @@ public class MainController {
   }
 
   @PostMapping("/register")
-  public String submitForm(@ModelAttribute("user") User user) {
-    System.out.println(user);
-    return registerUser(user);
+  public String submitForm(Model model, @ModelAttribute("user") User user) {
+    boolean isValid = User.isValidUser(user);
+
+    if (isValid) {
+      System.out.println(user);
+      return registerUser(user);
+    }
+
+    User blankUser = new User();
+    model.addAttribute("user", blankUser);
+
+    List<String> listProfession = Arrays.asList("Doctor", "Nurse Practictioner", "Specialist");
+    model.addAttribute("listProfession", listProfession);
+    model.addAttribute("error", "Please fill in all fields properly!");
+    return "register_form";
   }
 
   @GetMapping("/login")

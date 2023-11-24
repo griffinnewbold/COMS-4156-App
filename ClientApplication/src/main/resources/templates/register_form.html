@@ -33,13 +33,13 @@
         <label>Full name:</label>
         <input type="text" th:field="*{name}" /><br/>
 
-        <label>E-mail:</label>
+        <label>Email:</label>
         <input type="text" th:field="*{email}" /><br/>
 
         <label>Password:</label>
         <input type="password" th:field="*{password}" /><br/>
 
-        <label>Birthday (yyyy-mm-dd):</label>
+        <label>Birthday (mm-dd-yyyy):</label>
         <input type="text" th:field="*{birthday}" /><br/>
 
         <label>Gender:</label>
@@ -52,9 +52,18 @@
         </select>
         <br/>
 
-
+        <span th:if="${error}" style="color: red;" th:text="${error}"></span><br>
         <button type="submit">Register</button>
     </form>
+    <div style="margin-top: 20px;">
+        <a th:href="@{/}" style="text-decoration: none;">
+            <button>Go Home</button>
+        </a>
+
+        <a th:href="@{/login}" style="text-decoration: none;">
+            <button>Login</button>
+        </a>
+    </div>
 </div>
 </body>
 </html>

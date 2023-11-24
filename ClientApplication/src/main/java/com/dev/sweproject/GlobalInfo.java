@@ -12,6 +12,7 @@ public class GlobalInfo {
   public static final String STATS_URI = "/see-document-stats";
   public static final String DIFFERENCE_URI = "/generate-difference-summary";
   public static final String DOWNLOAD_URI = "/download-doc";
+  public static final String RETRIEVE_URI = "/retrieve-docs";
 
 
   //IF YOU ARE TESTING FOR CONCURRENCY PLEASE
