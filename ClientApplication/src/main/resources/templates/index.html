@@ -2,12 +2,41 @@
 <html>
 <head>
     <meta charset="ISO-8859-1">
-    <title>Spring Boot Form Demo</title>
+    <title>Client App</title>
+    <style>
+        body {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #options {
+            margin-top: 20px;
+        }
+
+        #login, #register {
+            display: block;
+            margin: 10px auto;
+            width: 100px;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-<div align="center">
-    <h1>Spring Boot Form Demo</h1>
-    <a href="/register">Click here to register</a>
+<div>
+    <h1>Welcome! Login or Register Below!</h1>
+    <div id="options">
+        <a href="/login" id="login">Login</a>
+        <a href="/register" id="register">Register</a>
+    </div>
 </div>
 </body>
 </html>

@@ -7,9 +7,12 @@ import org.springframework.context.*;
 @SpringBootApplication
 public class ClientApplication {
 
+  private static FirebaseService firebaseDataService;
+
   public static void main(String[] args) {
     ApplicationContext context = SpringApplication.run(ClientApplication.class, args);
-    GlobalInfo.firebaseDataService = context.getBean(FirebaseService.class);
+    firebaseDataService = context.getBean(FirebaseService.class);
+    GlobalInfo.assignDatabase(firebaseDataService);
   }
 
 }
