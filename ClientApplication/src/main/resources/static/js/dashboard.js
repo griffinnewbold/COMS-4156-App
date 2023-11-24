@@ -71,7 +71,7 @@ function fetch_docs()
 
 function logout()
 {
-    location.href = "index.html";
+    location.href = "/";
 }
 
 function upload()
