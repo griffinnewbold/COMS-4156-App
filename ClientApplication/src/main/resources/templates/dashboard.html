@@ -7,6 +7,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/dashboard.css">
+	<script src="./js/dashboard.js"></script>
 </head>
 
 <body>
@@ -43,18 +44,34 @@
         <h3 id="ur-docs">Documents</h3>
       </div>
       <div class="col-md-4">
-        <input type="text" id="searchbox" placeholder="Search...">
+        <input type="text" id="searchbox" placeholder="Search..." oninput="search()">
       </div>
       <div class="col-md-4">
         <button type="button" id="logout">Logout</button>
       </div>
     </div>
+    <hr>
 
     <div id="docs-container">
-      
-    </div>
+      <!-- In practice, this will be populated dynamically, with a dynamic link URL and name.
+           For now, it's static for mock testing. -->
+      <!-- BEGIN dynamically generated section -->
 
-    <hr>
+      <div class="row">
+        <div class="col-md-3">
+          <a href="document.html?id=TMP">
+            <div class="doc-link">
+              <br>
+              <div class="doc-image"></div>
+              <br>
+              <p>Document Name</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- END dynamically generated section -->
+    </div>
   </div>
 </body>
 

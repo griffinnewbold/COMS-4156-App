@@ -32,3 +32,16 @@ hr {
     position: absolute;
     margin-top: 16px;
 }
+
+.doc-link {
+    outline: 1px dashed gray;
+    text-align: center;
+}
+
+.doc-image {
+    box-shadow: 5px 10px #888888;
+    border: 1px solid black;
+    width: 80%;
+    height: 240px;
+    margin-left: 10%;
+}
