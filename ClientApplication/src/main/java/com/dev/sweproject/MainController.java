@@ -45,7 +45,9 @@ public class MainController {
   @PostMapping("/login")
   public String attemptLogin(String email, String password, Model model) {
     try {
-      CompletableFuture<Boolean> result = firebaseDataService.confirmLogin(email, password);
+      CompletableFuture<Boolean> result = firebaseDataService.confirmLogin(email.substring(
+              0, email.indexOf('.')), password
+      );
       boolean isSuccessful = result.get();
 
       if (isSuccessful) {
@@ -63,7 +65,9 @@ public class MainController {
 
   public String registerUser(User user) {
     try {
-      CompletableFuture<Object> result = firebaseDataService.addEntry(NETWORK_ID, user.getEmail(), user);
+      CompletableFuture<Object> result = firebaseDataService.addEntry(NETWORK_ID, user.getEmail().substring(
+              0, user.getEmail().indexOf('.')), user
+      );
       result.get();
       return "login_form";
     } catch (Exception e) {
