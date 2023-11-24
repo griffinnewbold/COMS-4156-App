@@ -17,6 +17,12 @@ public class MainController {
     return "index";
   }
 
+  @GetMapping("/dashboard")
+  public String dashboard() { return "dashboard"; }
+
+  @GetMapping("/document")
+  public String document() { return "document"; }
+
   @GetMapping("/register")
   public String showForm(Model model) {
     User user = new User();

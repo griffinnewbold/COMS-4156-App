@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Document</title>
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script src="../static/js/jquery-3.3.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/document.css}">
+    <link rel="stylesheet" href="../static/css/document.css">
+	<script th:src="@{/js/document.js}"></script>
+	<script src="../static/js/document.js"></script>
+</head>
+
+<body>
+  <div class="container"><br>
+
+    <!-- Top row -->
+    <div class="row">
+      <div class="col-md-3" id="back-button-container">
+        <button type="button" id="back-button" onclick="goback()"><- My Documents</button>
+      </div>
+      <div class="col-md-6">
+        <div id="doc-name-label">
+          <h1 id="doc-name-label-text">Document Name (version 1)</h1>
+        </div>
+      </div>
+      <div class="col-md-3"></div> <!-- empty div -->
+    </div>
+    <br>
+
+    <div class="row">
+
+      <!-- left column -->
+      <div class="col-md-6" id="left-column">
+        <h3>Preview</h3>
+      </div>
+
+      <!-- right column -->
+      <div class="col-md-6" id="right-column">
+        <h3>Manage Document</h3>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>
