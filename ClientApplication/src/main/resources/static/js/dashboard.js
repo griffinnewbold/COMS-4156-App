@@ -24,7 +24,7 @@ function render_docs(filter_string)
         }
 
         doc_html += '<div class="col-md-3">';
-        doc_html += '<a href=document.html?id=' + id + '>'
+        doc_html += '<a href=document?id=' + id + '>'
         doc_html += '<div class="doc-link"><br>'
         doc_html += '<div class="doc-image"></div><br>'
         doc_html += '<p>' + name + '</p>'
@@ -92,6 +92,10 @@ function upload()
         alert("You must provide a name for your document to upload.");
         return;
     }
+
+    // TODO: once the endpoint to upload data is setup, call that from here.
+
+    location.reload();
 }
 
 $(document).ready(() => {
