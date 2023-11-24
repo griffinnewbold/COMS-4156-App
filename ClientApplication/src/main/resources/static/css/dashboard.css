@@ -1,0 +1,47 @@
+#src {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 100px;
+    text-align: right;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: black;
+}
+
+#searchbox {
+    position: absolute;
+    margin-top: 24px;
+}
+
+#logout {
+    position: absolute;
+    margin-top: 24px;
+}
+
+#upload {
+    margin-top: 8px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+#filepicker, #name, #upload-button {
+    position: absolute;
+    margin-top: 16px;
+}
+
+.doc-link {
+    outline: 1px dashed gray;
+    text-align: center;
+}
+
+.doc-image {
+    box-shadow: 5px 10px #888888;
+    border: 1px solid black;
+    width: 80%;
+    height: 240px;
+    margin-left: 10%;
+}

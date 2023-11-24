@@ -18,4 +18,8 @@ public class GlobalInfo {
   //ALTER THIS BEFORE RUNNING A NEW INSTANCE
   public static final String NETWORK_ID = "QCO1700369101620";
 
+  public static void assignDatabase(FirebaseService fb) {
+    firebaseDataService = fb;
+  }
+
 }

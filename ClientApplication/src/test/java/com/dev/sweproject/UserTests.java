@@ -52,30 +52,15 @@ class UserTests {
     assertEquals("male", testUser.getGender());
   }
 
-  @Test
-  @Order(5)
-  public void noteTest() {
-    assertNull(testUser.getNote());
-    testUser.setNote("possibly allergic to peanuts");
-    assertNotNull(testUser.getNote());
-    assertEquals("possibly allergic to peanuts", testUser.getNote());
-  }
 
-  @Test
-  @Order(6)
-  public void marriedTest() {
-    assertFalse(testUser.isMarried());
-    testUser.setMarried(true);
-    assertTrue(testUser.isMarried());
-  }
 
   @Test
   @Order(7)
   public void birthdayTest() {
     assertNull(testUser.getBirthday());
-    testUser.setBirthday(new Date(2002, 10, 30));
+    testUser.setBirthday("10/30/2002");
     assertNotNull(testUser.getBirthday());
-    assertEquals(new Date(2002, 10, 30), testUser.getBirthday());
+    assertEquals("10/30/2002", testUser.getBirthday());
   }
 
   @Test
@@ -93,8 +78,7 @@ class UserTests {
     String actualUser = testUser.toString();
     String expectedUser = "User [name=" + "Griffin" + ", email=" + "randomemail@service.com"
         + ", password=" + "mypass" + ", gender="
-        + "male" + ", note=" + "possibly allergic to peanuts" + ", married=" + true + ", " +
-        "birthday=" + new Date(2002, 10, 30)
+        + "male" + ", birthday=" + "10/30/2002"
         + ", profession=" + "Software Developer" + "]";
     assertEquals(expectedUser, actualUser);
   }

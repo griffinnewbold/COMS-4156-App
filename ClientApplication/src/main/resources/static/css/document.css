@@ -1,0 +1,55 @@
+#back-button-container {
+    margin-top: 24px;
+}
+
+#back-button {
+    width: 160px;
+    height: 35px;
+}
+
+#doc-name-label {
+    text-align: center;
+}
+
+#left-column {
+    border-right: 1px solid black;
+}
+
+#left-column, #right-column {
+    text-align: center;
+}
+
+#right-column-contents {
+    text-align: left;
+}
+
+#preview-box {
+    border: 1px solid black;
+    height: 470px;
+    overflow-y: auto;
+}
+
+#preview-data {
+    font-size: 20px;
+    text-align: left;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+#stats-box {
+    text-align: left;
+}
+
+.manage-section {
+    margin-top: 20px;
+}
+
+#download-button, #upload-button, #share-button, #download-version-button {
+    width: 100%;
+}
+
+#delete-button {
+    border-color: red;
+    color: darkred;
+    width: 75%;
+}
