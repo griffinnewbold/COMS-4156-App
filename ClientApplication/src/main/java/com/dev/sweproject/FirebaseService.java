@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import static com.dev.sweproject.GlobalInfo.*;
+
 /**
  * The `FirebaseService` class provides service methods related to the database (DB).
  * It utilizes `CompletableFuture<\Object>` for handling asynchronous operations and representing
@@ -33,11 +35,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class FirebaseService {
 
   private final FirebaseApp firebaseApp;
-
-  /**
-   * A Constant denoting the standard length of a Network Id prefix.
-   */
-  public static final int NETWORK_ID_LENGTH = 3;
 
   /**
    * Creates an instance of the Firebase Service.
@@ -59,6 +56,43 @@ public class FirebaseService {
     FirebaseDatabase database = FirebaseDatabase.getInstance(firebaseApp);
     return database.getReference();
   }
+
+
+  public CompletableFuture<Boolean> confirmLogin(String email, String password) {
+    CompletableFuture<Boolean> future = new CompletableFuture<>();
+
+    DatabaseReference databaseReference = getDatabaseReference();
+    DatabaseReference userReference = databaseReference.child(NETWORK_ID).child(email);
+
+    userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(DataSnapshot dataSnapshot) {
+        if (dataSnapshot.exists()) {
+          // User with the provided email exists
+          String storedPassword = dataSnapshot.child("password").getValue(String.class);
+
+          if (storedPassword != null && storedPassword.equals(password)) {
+            // Passwords match
+            future.complete(true);
+          } else {
+            // Passwords do not match
+            future.complete(false);
+          }
+        } else {
+          // User with the provided email does not exist
+          future.complete(false);
+        }
+      }
+
+      @Override
+      public void onCancelled(DatabaseError databaseError) {
+        future.completeExceptionally(databaseError.toException());
+      }
+    });
+
+    return future;
+  }
+
 
   /**
    * Add an entry to the specified collection with the key-value association provided.

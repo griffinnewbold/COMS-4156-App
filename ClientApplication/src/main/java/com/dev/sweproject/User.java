@@ -8,9 +8,7 @@ public class User {
   private String email;
   private String password;
   private String gender;
-  private String note;
-  private boolean married;
-  private Date birthday;
+  private String birthday;
   private String profession;
 
   public String getName() {
@@ -45,27 +43,11 @@ public class User {
     this.gender = gender;
   }
 
-  public String getNote() {
-    return note;
-  }
-
-  public void setNote(String note) {
-    this.note = note;
-  }
-
-  public boolean isMarried() {
-    return married;
-  }
-
-  public void setMarried(boolean married) {
-    this.married = married;
-  }
-
-  public Date getBirthday() {
+  public String getBirthday() {
     return birthday;
   }
 
-  public void setBirthday(Date birthday) {
+  public void setBirthday(String birthday) {
     this.birthday = birthday;
   }
 
@@ -80,8 +62,7 @@ public class User {
   @Override
   public String toString() {
     return "User [name=" + name + ", email=" + email + ", password=" + password + ", gender="
-        + gender + ", note=" + note + ", married=" + married + ", birthday=" + birthday
-        + ", profession=" + profession + "]";
+        + gender + ", birthday=" + birthday + ", profession=" + profession + "]";
   }
 
 }
