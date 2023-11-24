@@ -1,0 +1,23 @@
+#src {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 100px;
+    text-align: right;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: black;
+}
+
+#searchbox {
+    position: absolute;
+    margin-top: 24px;
+}
+
+#logout {
+    position: absolute;
+    margin-top: 24px;
+}
