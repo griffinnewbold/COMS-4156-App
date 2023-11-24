@@ -21,3 +21,14 @@ hr {
     position: absolute;
     margin-top: 24px;
 }
+
+#upload {
+    margin-top: 8px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+#filepicker, #name, #upload-button {
+    position: absolute;
+    margin-top: 16px;
+}

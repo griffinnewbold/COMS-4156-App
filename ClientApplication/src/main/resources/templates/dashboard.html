@@ -11,11 +11,36 @@
 
 <body>
   <div class="container">
-    <div class="row"><h1>Welcome!</h1></div>
+    <div class="row">
+      <div class="col-md-4">
+        <h1>Welcome!</h1>
+      </div>
+      <div class="col-md-8">
+        <div id="upload">
+          
+          <div class="row">
+            <div class="col-sm-2">
+              <h3>Upload</h3>
+            </div>
+            <div class="col-sm-3">
+              <input type="file" id="filepicker">
+            </div>
+            <div class="col-sm-3">
+              <input type="text" id="name" placeholder="Document name">
+            </div>
+            <div class="col-sm-3">
+              <button type="button" id="upload-button">Upload</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
     <br>
     <div class="row">
       <div class="col-md-4">
-        <h3 id="ur-docs">Your Documents</h3>
+        <h3 id="ur-docs">Documents</h3>
       </div>
       <div class="col-md-4">
         <input type="text" id="searchbox" placeholder="Search...">
@@ -24,6 +49,11 @@
         <button type="button" id="logout">Logout</button>
       </div>
     </div>
+
+    <div id="docs-container">
+      
+    </div>
+
     <hr>
   </div>
 </body>
