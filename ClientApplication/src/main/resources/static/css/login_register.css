@@ -1,0 +1,19 @@
+.login-main-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.login-sub-container {
+    width: 50%;
+    padding: 10px;
+    border-right: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+form {
+    width: 75%;
+}

@@ -45,7 +45,7 @@ public class MainController {
 
   @GetMapping("/login")
   public String gotoLogin(Model model) {
-    return "login_form";
+    return "login_register";
   }
 
   @PostMapping("/login")
