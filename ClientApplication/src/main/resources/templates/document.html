@@ -73,6 +73,65 @@
       <!-- right column -->
       <div class="col-md-6" id="right-column">
         <h3>Manage Document</h3>
+        <div class="row" id="right-column-contents">
+          <div class="col-md-1"></div>
+          <div class="col-md-10">
+            <button type="button" id="download-button" onclick="download_latest()">Download</button>
+
+            <!-- upload section -->
+            <div class="row manage-section">
+              <div class="col-md-7"><input type="file" id="filepicker"></div>
+              <div class="col-md-5">
+                <button type="button" id="upload-button" onclick="upload()">Upload</button>
+              </div>
+            </div>
+
+            <!-- share section -->
+            <h4>Share Document</h4>
+            <div class="row">
+              <div class="col-md-7">
+                <select name="share-with" id="share-select">
+                  <option selected disabled>Choose provider/patient</option>
+                  <option value="Dr. Meredith Grey">Dr. Meredith Grey</option>
+                  <option value="Dr. Derek Shepherd">Dr. Derek Shepherd</option>
+                  <option value="Dr. Richard Webber">Dr. Richard Webber</option>
+                </select>
+              </div>
+              <div class="col-md-5">
+                <button type="button" id="share-button" onclick="share()">Share</button>
+              </div>
+            </div>
+
+            <!-- previous versions section -->
+            <h4>Previous Versions</h4>
+            <div class="row">
+              <div class="col-md-7">
+                <select name="version-pick" id="version-select">
+                  <option selected disabled>Choose version</option>
+                  <option value="3">3</option>
+                  <option value="2">2</option>
+                  <option value="1">1</option>
+                </select>
+              </div>
+              <div class="col-md-5">
+                <button type="button" id="download-version-button" onclick="download_version()">
+                  Download Version
+                </button>
+              </div>
+            </div>
+
+            <!-- delete section -->
+            <h4>Delete Document</h4>
+            <div class="row">
+              <div class="col-md-7">
+                <button type="button" id="delete-button" onclick="delete_doc()">Delete</button>
+              </div>
+              <div class="col-md-5"></div>
+            </div>
+
+          </div>
+          <div class="col-md-1"></div>
+        </div>
       </div>
     </div>
 

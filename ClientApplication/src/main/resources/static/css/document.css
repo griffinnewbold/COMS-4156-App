@@ -19,6 +19,10 @@
     text-align: center;
 }
 
+#right-column-contents {
+    text-align: left;
+}
+
 #preview-box {
     border: 1px solid black;
     height: 470px;
@@ -34,4 +38,18 @@
 
 #stats-box {
     text-align: left;
+}
+
+.manage-section {
+    margin-top: 20px;
+}
+
+#download-button, #upload-button, #share-button, #download-version-button {
+    width: 100%;
+}
+
+#delete-button {
+    border-color: red;
+    color: darkred;
+    width: 75%;
 }
