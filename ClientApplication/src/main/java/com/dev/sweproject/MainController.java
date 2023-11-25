@@ -1,14 +1,20 @@
 package com.dev.sweproject;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -79,17 +85,6 @@ public class MainController {
       boolean isSuccessful = result.get();
 
       if (isSuccessful) {
-        String jsonString = retrieveDocuments(email.substring(0, email.indexOf('@')));
-        //System.out.println(jsonString);
-        //retrieveDocumentStats(email.substring(0, email.indexOf('@')), "common aliments");
-        //retrievePreviousVersion(email.substring(0, email.indexOf('@')), "common aliments", 1);
-        //retrieveDocumentContents(email.substring(0, email.indexOf('@')), "common aliments");
-        //retrieveDocumentDifferences(email.substring(0, email.indexOf('@')), "common aliments",
-        //        "jane doe birth");
-        //sendShareRequest(email.substring(0, email.indexOf('@')), "common aliments",
-        //        "mohsin@outlook");
-        //sendDeleteRequest(email.substring(0, email.indexOf('@')), "john doe second diagnose");
-        //sendServiceRegistrationRequest();
         model.addAttribute("user_id", email.substring(0, email.indexOf('@')));
         return "dashboard";
       }
@@ -145,7 +140,7 @@ public class MainController {
     return sendHttpRequest(fullUrl);
   }
 
-  public String sendShareRequest(String userId, String documentTitle, String newUserId) {
+  public String patchShareRequest(String userId, String documentTitle, String newUserId) {
     documentTitle = convertDocumentTitle(documentTitle);
     String fullUrl = SERVICE_IP + SHARE_URI + "?network-id=" + NETWORK_ID + "&document-name="+ documentTitle
             + "&your-user-id=" + userId + "&their-user-id=" + newUserId;
@@ -164,15 +159,15 @@ public class MainController {
       while ((line = reader.readLine()) != null) {
         result.append(line);
       }
-      System.out.println("Response from API: " + result);
+      return "success: " + result;
 
     } catch (Exception e) {
       System.out.println("Error: " + e.getMessage());
+      return "error: An unexpected error has occurred.";
     }
-    return "";
   }
 
-  public String sendDeleteRequest(String userId, String documentTitle) {
+  public String deleteRequest(String userId, String documentTitle) {
     documentTitle = convertDocumentTitle(documentTitle);
     String fullUrl = SERVICE_IP + DELETE_URI + "?network-id=" + NETWORK_ID + "&document-name="+ documentTitle
             + "&your-user-id=" + userId;
@@ -188,27 +183,52 @@ public class MainController {
       while ((line = reader.readLine()) != null) {
         result.append(line);
       }
-
-      System.out.println("Response from API: " + result);
-
-      //add logic to redirect user back to dashboard if result === "Your document was successfully deleted"
-
+      return "success: " + result;
     } catch (Exception e) {
       System.out.println("Error: " + e.getMessage());
+      return "error: An unexpected error has occurred.";
     }
-    return "";
   }
 
-  public String sendUploadRequest(String userId, String documentTitle, MultipartFile contents) {
-    return "";
+  public String postUploadRequest(String userId, String documentTitle, String contents) {
+    String fullUrl = SERVICE_IP + UPLOAD_URI + "?network-id=" + NETWORK_ID + "&document-name="+ documentTitle
+            + "&user-id=" + userId;
+    try {
+      byte[] contentsBytes = contents.getBytes();
+      ByteArrayMultipartFile file = new ByteArrayMultipartFile(contentsBytes, documentTitle, "text/plain",
+              documentTitle + ".txt");
+      HttpHeaders headers = new HttpHeaders();
+      headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+      MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+      body.add("contents", new ByteArrayResource(file.getBytes()) {
+        @Override
+        public String getFilename() {
+          return file.getOriginalFilename();
+        }
+      });
+
+      org.springframework.http.HttpEntity<MultiValueMap<String, Object>> requestEntity =
+              new org.springframework.http.HttpEntity<>(body, headers);
+
+      ResponseEntity<String> response = restTemplate.postForEntity(fullUrl, requestEntity, String.class);
+
+      if (response.getStatusCode().is2xxSuccessful()) {
+        return "success: " + response.getBody();
+      } else {
+        return "failure: " + response.getStatusCode() + " - " + response.getBody();
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return "error: An unexpected error has occurred.";
+    }
   }
 
-  public String sendServiceRegistrationRequest() {
+  public String postServiceRegistrationRequest() {
     String fullUrl = SERVICE_IP + REGISTRATION_URI;
     try {
       HttpClient httpClient = HttpClients.createDefault();
       HttpPost httpPost = new HttpPost(fullUrl);
-
 
       httpPost.setHeader("Content-Type", "application/json");
       HttpResponse response = httpClient.execute(httpPost);
@@ -219,13 +239,11 @@ public class MainController {
       while ((line = reader.readLine()) != null) {
         result.append(line);
       }
-
-      System.out.println("Response from API: " + result);
-
+      return "success: " + result;
     } catch (Exception e) {
       System.out.println("Error: " + e.getMessage());
+      return "error: An unexpected error has occurred.";
     }
-    return "";
   }
 
   private String sendHttpRequest(String url) {
@@ -233,16 +251,16 @@ public class MainController {
       ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
       if (response.getStatusCode().is2xxSuccessful()) {
-        System.out.println(response.getBody());
         return response.getBody();
       }
 
     } catch (HttpClientErrorException e) {
       System.out.println("HTTP error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
+      return "failure: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
     } catch (Exception e) {
       System.out.println("Unexpected error: " + e.getMessage());
+      return "error: An unexpected error has occurred.";
     }
-    return "";
   }
 
   private String convertDocumentTitle(String title) {
@@ -256,8 +274,4 @@ public class MainController {
     }
     return result.toString();
   }
-
-  /*
-  @PostMapping("/upload")
-   */
 }
