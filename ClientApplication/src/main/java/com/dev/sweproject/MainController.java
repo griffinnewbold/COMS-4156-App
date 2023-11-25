@@ -90,6 +90,7 @@ public class MainController {
         //        "mohsin@outlook");
         //sendDeleteRequest(email.substring(0, email.indexOf('@')), "john doe second diagnose");
         //sendServiceRegistrationRequest();
+        model.addAttribute("user_id", email.substring(0, email.indexOf('@')));
         return "dashboard";
       }
       model.addAttribute("error", "Invalid credentials");

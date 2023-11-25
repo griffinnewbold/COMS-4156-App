@@ -9,6 +9,13 @@
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
     <link rel="stylesheet" href="../static/css/dashboard.css">
+    <script th:inline="javascript">
+      let params = new URLSearchParams(window.location.search);
+      let tmp_user_id = /*[[${user_id}]]*/ "";
+      const user_id = (((tmp_user_id == null) || (tmp_user_id.length == 0)) ? params.get('user_id') : tmp_user_id);
+
+      console.log("User_id: " + user_id);
+    </script>
 	<script th:src="@{/js/dashboard.js}"></script>
 	<script src="../static/js/dashboard.js"></script>
 </head>

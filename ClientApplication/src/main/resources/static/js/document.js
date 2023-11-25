@@ -2,7 +2,7 @@ let data = {}
 
 function goback()
 {
-    location.href = "dashboard";
+    location.href = "dashboard?user_id=" + user_id;
 }
 
 function refresh_doc()

@@ -24,7 +24,7 @@ function render_docs(filter_string)
         }
 
         doc_html += '<div class="col-md-3">';
-        doc_html += '<a href=document?id=' + id + '>'
+        doc_html += '<a href=document?user_id=' + user_id + '&doc_id=' + id + '>'
         doc_html += '<div class="doc-link"><br>'
         doc_html += '<div class="doc-image"></div><br>'
         doc_html += '<p>' + name + '</p>'
