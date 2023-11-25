@@ -133,6 +133,13 @@ public class MainController {
     return sendHttpRequest(fullUrl);
   }
 
+  @GetMapping(value = "/retrieve-document-stats", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> retrieveDocumentStatsAPI(@RequestParam(value = "user_id") String userId,
+                                                    @RequestParam(value = "doc_id") String documentId)
+          throws JsonProcessingException {
+      ObjectMapper om = new ObjectMapper();
+      return new ResponseEntity<>(om.writeValueAsString(retrieveDocumentStats(userId, documentId)), HttpStatus.OK);
+  }
   public String retrieveDocumentStats(String userId, String documentTitle) {
     String fullUrl = SERVICE_IP + STATS_URI + "?network-id=" + NETWORK_ID + "&document-name="+documentTitle +
             "&your-user-id=" + userId;
@@ -144,7 +151,7 @@ public class MainController {
             "&your-user-id=" + userId + "&revision-number=" + revisionNumber;
     return sendHttpRequest(fullUrl);
   }
-
+  
   public String retrieveDocumentContents(String userId, String documentTitle) {
     String fullUrl = SERVICE_IP + DOWNLOAD_URI + "?network-id=" + NETWORK_ID + "&document-name="+documentTitle +
             "&your-user-id=" + userId;

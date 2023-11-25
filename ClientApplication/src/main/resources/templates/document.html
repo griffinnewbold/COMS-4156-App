@@ -15,7 +15,10 @@
       let tmp_user_id = /*[${user_id}]*/ "";
       const user_id = (((tmp_user_id == null) || (tmp_user_id.length == 0)) ? params.get('user_id') : tmp_user_id);
 
+      const doc_id = params.get('doc_id');
+
       console.log("User_id: " + user_id);
+      console.log("Doc_id: " + doc_id);
     </script>
 	<script th:src="@{/js/document.js}"></script>
 	<script src="../static/js/document.js"></script>
@@ -31,7 +34,7 @@
       </div>
       <div class="col-md-6">
         <div id="doc-name-label">
-          <h1 id="doc-name-label-text">Document Name (version 1)</h1>
+          <h1 id="doc-name-label-text"></h1>
         </div>
       </div>
       <div class="col-md-3"></div> <!-- empty div -->
@@ -48,23 +51,7 @@
           <div class="col-md-1"></div>
           <div class="col-md-10">
             <div id="preview-box">
-              <p id="preview-data">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                commodo consequat.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                commodo consequat.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                commodo consequat.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                commodo consequat.
-              </p>
+              <p id="preview-data"></p>
             </div>
             <div id="stats-box">
               <h4>Statistics</h4>
@@ -98,7 +85,7 @@
             <div class="row">
               <div class="col-md-7">
                 <select name="share-with" id="share-select">
-                  <option selected disabled>Choose provider/patient</option>
+                  <option selected disabled>Choose provider</option>
                   <option value="Dr. Meredith Grey">Dr. Meredith Grey</option>
                   <option value="Dr. Derek Shepherd">Dr. Derek Shepherd</option>
                   <option value="Dr. Richard Webber">Dr. Richard Webber</option>
