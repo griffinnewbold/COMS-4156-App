@@ -17,11 +17,9 @@ function load_providers()
             return;
         }
         const users = JSON.parse(JSON.parse(xhr.responseText));
-        console.log(users);
 
         let prov_html = '<option selected disabled>Choose provider</option>';
         let providers = data['userId'].split('/');
-        console.log(providers);
 
         for (let i = 0; i < users.length; i++) {
             let user = users[i].substring(0, users[i].indexOf('@'));
@@ -54,7 +52,6 @@ function load_doc_stats()
             if (i != stats_lines.length - 1) stats += '\n';
         }
 
-        console.log(stats);
         $('#stats-data').html(stats);
     };
     xhr.open("GET", "/retrieve-document-stats?user_id=" + user_id + '&doc_id=' + data['title']);
@@ -132,7 +129,20 @@ function share()
     }
     console.log("Sharing with: " + share_val);
 
-    // TODO
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState != 4) {
+            return;
+        }
+        if (xhr.status != 200) {
+            alert("Server error: " + xhr.statusText);
+            return;
+        }
+
+        location.reload();
+    };
+    xhr.open("PATCH", "/share-document?user_id=" + user_id +'&doc_id=' + data['title'] + '&new_user_id=' + share_val);
+    xhr.send();
 }
 
 function delete_doc()

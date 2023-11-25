@@ -19,10 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -183,6 +180,15 @@ public class MainController {
       System.out.println(e.getMessage());
       return "[]";
     }
+  }
+
+  @PatchMapping(value = "/share-document", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> patchShareRequestAPI(@RequestParam(value = "user_id") String userId,
+                                                @RequestParam(value = "doc_id") String documentId,
+                                                @RequestParam(value = "new_user_id") String newUserId)
+          throws JsonProcessingException {
+    ObjectMapper om = new ObjectMapper();
+    return new ResponseEntity<>(om.writeValueAsString(patchShareRequest(userId, documentId, newUserId)), HttpStatus.OK);
   }
 
   public String patchShareRequest(String userId, String documentTitle, String newUserId) {
