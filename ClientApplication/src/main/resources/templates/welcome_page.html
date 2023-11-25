@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Welcome</title>
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script src="../static/js/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        h2 { font-size: 1.5em; }
+        .login-button {
+            display: block;
+            margin: 10px auto;
+            width: 100px;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            outline: none;
+        }
+        /* Add rules for hover, active, and focus states */
+        .login-button:hover,
+        .login-button:active,
+        .login-button:focus {
+            color: #fff;
+            background-color: #007bff;
+            text-decoration: none;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="row" style="margin-top: 120px">
+        <div style="text-align: center">
+            <h1>Welcome to HealthDocs</h1>
+            <div class="row" style="margin-top: 40px">
+                <h2>Click below to access your account!</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px">
+        <div style="text-align: center">
+            <a href="/log-in-register" class="login-button">
+                Proceed
+            </a>
+        </div>
+    </div>
+    <br>
+</div>
+</div>
+</body>
+</html>

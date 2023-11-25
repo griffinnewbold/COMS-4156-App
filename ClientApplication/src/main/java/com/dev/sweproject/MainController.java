@@ -21,6 +21,11 @@ public class MainController {
 
   @GetMapping({"/", "/index", "/home"})
   public String index() {
+    return "welcome_page";
+  }
+
+  @GetMapping("/log-in-register")
+  public String logInOrRegister() {
     return "index";
   }
 
