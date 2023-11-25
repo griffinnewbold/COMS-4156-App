@@ -1,27 +1,27 @@
 package com.dev.sweproject;
 
-import org.springframework.http.*;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpPatch;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClients;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.HttpClientErrorException;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPatch;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClients;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import static com.dev.sweproject.GlobalInfo.*;
-
 @Controller
 public class MainController {
 
@@ -88,6 +88,8 @@ public class MainController {
         //        "jane doe birth");
         //sendShareRequest(email.substring(0, email.indexOf('@')), "common aliments",
         //        "mohsin@outlook");
+        //sendDeleteRequest(email.substring(0, email.indexOf('@')), "john doe second diagnose");
+        //sendServiceRegistrationRequest();
         return "dashboard";
       }
       model.addAttribute("error", "Invalid credentials");
@@ -169,6 +171,62 @@ public class MainController {
     return "";
   }
 
+  public String sendDeleteRequest(String userId, String documentTitle) {
+    documentTitle = convertDocumentTitle(documentTitle);
+    String fullUrl = SERVICE_IP + DELETE_URI + "?network-id=" + NETWORK_ID + "&document-name="+ documentTitle
+            + "&your-user-id=" + userId;
+    try {
+      HttpClient httpClient = HttpClients.createDefault();
+      HttpDelete httpDelete = new HttpDelete(fullUrl);
+
+      HttpResponse response = httpClient.execute(httpDelete);
+
+      BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+      StringBuilder result = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        result.append(line);
+      }
+
+      System.out.println("Response from API: " + result);
+
+      //add logic to redirect user back to dashboard if result === "Your document was successfully deleted"
+
+    } catch (Exception e) {
+      System.out.println("Error: " + e.getMessage());
+    }
+    return "";
+  }
+
+  public String sendUploadRequest(String userId, String documentTitle, MultipartFile contents) {
+    return "";
+  }
+
+  public String sendServiceRegistrationRequest() {
+    String fullUrl = SERVICE_IP + REGISTRATION_URI;
+    try {
+      HttpClient httpClient = HttpClients.createDefault();
+      HttpPost httpPost = new HttpPost(fullUrl);
+
+
+      httpPost.setHeader("Content-Type", "application/json");
+      HttpResponse response = httpClient.execute(httpPost);
+
+      BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+      StringBuilder result = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        result.append(line);
+      }
+
+      System.out.println("Response from API: " + result);
+
+    } catch (Exception e) {
+      System.out.println("Error: " + e.getMessage());
+    }
+    return "";
+  }
+
   private String sendHttpRequest(String url) {
     try {
       ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
@@ -200,9 +258,5 @@ public class MainController {
 
   /*
   @PostMapping("/upload")
-  @DeleteMapping("/delete")
    */
-
-
-
 }
