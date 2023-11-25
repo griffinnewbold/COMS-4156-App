@@ -8,6 +8,7 @@ function render_docs(filter_string)
     for (let i = 0; i < data.length; i++) {
         let name = data[i]["name"];
         let id = data[i]["id"];
+        let contents = data[i]["contents"]
 
         if (filter_string.length > 0) {
             if (!(name.toLowerCase().includes(filter_string.toLowerCase()))) {
@@ -26,7 +27,9 @@ function render_docs(filter_string)
         doc_html += '<div class="col-md-3">';
         doc_html += '<a href=document?user_id=' + user_id + '&doc_id=' + id + '>'
         doc_html += '<div class="doc-link"><br>'
-        doc_html += '<div class="doc-image"></div><br>'
+        doc_html += '<div class="doc-image">'
+        doc_html += '<p class="preview-data">' + contents + '</p>'
+        doc_html += '</div><br>'
         doc_html += '<p>' + name + '</p>'
         doc_html += '</div></a></div>';
 
