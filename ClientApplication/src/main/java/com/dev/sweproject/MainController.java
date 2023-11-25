@@ -241,6 +241,15 @@ public class MainController {
     }
   }
 
+  @PostMapping(value = "/upload-document", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> postUploadRequestAPI(@RequestParam(value = "user_id") String userId,
+                                                @RequestParam(value = "doc_name") String documentName,
+                                                @RequestParam(value = "contents") String contents)
+          throws JsonProcessingException {
+    ObjectMapper om = new ObjectMapper();
+    return new ResponseEntity<>(om.writeValueAsString(postUploadRequest(userId, documentName, contents)), HttpStatus.OK);
+  }
+
   public String postUploadRequest(String userId, String documentTitle, String contents) {
     String fullUrl = SERVICE_IP + UPLOAD_URI + "?network-id=" + NETWORK_ID + "&document-name="+ documentTitle
             + "&user-id=" + userId;

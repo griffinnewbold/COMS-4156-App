@@ -85,7 +85,7 @@ function upload()
     // Steps:
     // 1. make sure the user selected a file
     // 2. make sure the user gave a name
-    // 3. try and update!
+    // 3. try and upload!
 
     const filepicker = document.getElementById('filepicker');
     if (filepicker.files.length == 0) {
@@ -99,9 +99,29 @@ function upload()
         return;
     }
 
-    // TODO: once the endpoint to upload data is setup, call that from here.
+    // Get doc contents from filepicker
+    const file = filepicker.files[0];
+    const reader = new FileReader();
+    let contents = '';
+    reader.onload = (e) => {
+        contents = e.target.result;
 
-    location.reload();
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState != 4) {
+                return;
+            }
+            if (xhr.status != 200) {
+                alert("Server error: " + xhr.statusText);
+                return;
+            }
+
+            location.reload();
+        };
+        xhr.open("POST", "/upload-document?user_id=" + user_id + "&doc_name=" + name + "&contents=" + contents);
+        xhr.send();
+    };
+    reader.readAsText(file);
 }
 
 $(document).ready(() => {
