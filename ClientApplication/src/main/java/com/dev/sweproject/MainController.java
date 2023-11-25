@@ -91,6 +91,7 @@ public class MainController {
 
       if (isSuccessful) {
         model.addAttribute("user_id", email.substring(0, email.indexOf('@')));
+        System.out.println(retrieveUsernames());
         return "dashboard";
       }
       model.addAttribute("error", "Invalid credentials");
@@ -150,6 +151,17 @@ public class MainController {
     String fullUrl = SERVICE_IP + DIFFERENCE_URI + "?network-id=" + NETWORK_ID + "&fst-doc-name="+ fstDocumentTitle
             + "&snd-doc-name=" + sndDocumentTitle + "&your-user-id=" + userId;
     return sendHttpRequest(fullUrl);
+  }
+
+  public String retrieveUsernames() {
+    CompletableFuture<List<String>> result = firebaseDataService.getSubcollectionNames();
+    try {
+     List<String> listOfUsers = result.get();
+     return listOfUsers.toString();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return "[]";
+    }
   }
 
   public String patchShareRequest(String userId, String documentTitle, String newUserId) {

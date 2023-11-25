@@ -5,7 +5,9 @@ import com.google.firebase.database.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -86,6 +88,33 @@ public class FirebaseService {
 
     return future;
   }
+
+  public CompletableFuture<List<String>> getSubcollectionNames() {
+    CompletableFuture<List<String>> future = new CompletableFuture<>();
+
+    DatabaseReference databaseReference = getDatabaseReference();
+    DatabaseReference networkReference = databaseReference.child(NETWORK_ID);
+
+    networkReference.addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(DataSnapshot dataSnapshot) {
+        List<String> subcollectionNames = new ArrayList<>();
+
+        for (DataSnapshot subcollectionSnapshot : dataSnapshot.getChildren()) {
+          subcollectionNames.add(subcollectionSnapshot.getKey());
+        }
+        future.complete(subcollectionNames);
+      }
+
+      @Override
+      public void onCancelled(DatabaseError databaseError) {
+        future.completeExceptionally(new RuntimeException("Error reading data from Firebase"));
+      }
+    });
+
+    return future;
+  }
+
 
 
   /**
