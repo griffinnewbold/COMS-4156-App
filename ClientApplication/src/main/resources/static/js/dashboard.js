@@ -99,6 +99,8 @@ function upload()
         return;
     }
 
+    // TODO: make sure this name doesnt already identify a document? OR what happens if it does? it's ok if it just updates
+
     // Get doc contents from filepicker
     const file = filepicker.files[0];
     const reader = new FileReader();

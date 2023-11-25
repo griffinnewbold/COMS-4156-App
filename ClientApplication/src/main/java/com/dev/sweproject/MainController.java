@@ -218,6 +218,14 @@ public class MainController {
     }
   }
 
+  @DeleteMapping(value = "/delete-document", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> postUploadRequestAPI(@RequestParam(value = "user_id") String userId,
+                                                @RequestParam(value = "doc_name") String documentName)
+          throws JsonProcessingException {
+    ObjectMapper om = new ObjectMapper();
+    return new ResponseEntity<>(om.writeValueAsString(deleteRequest(userId, documentName)), HttpStatus.OK);
+  }
+
   public String deleteRequest(String userId, String documentTitle) {
     documentTitle = convertDocumentTitle(documentTitle);
     String fullUrl = SERVICE_IP + DELETE_URI + "?network-id=" + NETWORK_ID + "&document-name="+ documentTitle

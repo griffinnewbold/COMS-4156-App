@@ -147,9 +147,20 @@ function share()
 
 function delete_doc()
 {
-    // TODO: delete the document
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState != 4) {
+            return;
+        }
+        if (xhr.status != 200) {
+            alert("Server error: " + xhr.statusText);
+            return;
+        }
 
-    goback();
+        goback();
+    };
+    xhr.open("DELETE", "/delete-document?user_id=" + user_id +'&doc_name=' + data['title']);
+    xhr.send();
 }
 
 function load_document()
