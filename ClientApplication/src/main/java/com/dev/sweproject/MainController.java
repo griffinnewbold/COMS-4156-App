@@ -91,7 +91,6 @@ public class MainController {
 
       if (isSuccessful) {
         model.addAttribute("user_id", email.substring(0, email.indexOf('@')));
-        System.out.println(retrieveUsernames());
         return "dashboard";
       }
       model.addAttribute("error", "Invalid credentials");
