@@ -74,7 +74,12 @@ public class MainController {
 
       if (isSuccessful) {
         String jsonString = retrieveDocuments(email.substring(0, email.indexOf('@')));
-        System.out.println(jsonString);
+        //System.out.println(jsonString);
+        //retrieveDocumentStats(email.substring(0, email.indexOf('@')), "common aliments");
+        //retrievePreviousVersion(email.substring(0, email.indexOf('@')), "common aliments", 1);
+        //retrieveDocumentContents(email.substring(0, email.indexOf('@')), "common aliments");
+        //retrieveDocumentDifferences(email.substring(0, email.indexOf('@')), "common aliments",
+        //        "jane doe birth");
         return "dashboard";
       }
       model.addAttribute("error", "Invalid credentials");
@@ -118,14 +123,83 @@ public class MainController {
     return "";
   }
 
+  public String retrieveDocumentStats(String userId, String documentTitle) {
+    String fullUrl = SERVICE_IP + STATS_URI + "?network-id=" + NETWORK_ID + "&document-name="+documentTitle +
+            "&your-user-id=" + userId;
+    try {
+      ResponseEntity<String> response = restTemplate.getForEntity(fullUrl, String.class);
+
+      if (response.getStatusCode().is2xxSuccessful()) {
+        System.out.println(response.getBody());
+        return response.getBody();
+      }
+
+    } catch (HttpClientErrorException e) {
+      System.out.println("HTTP error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
+    } catch (Exception e) {
+      System.out.println("Unexpected error: " + e.getMessage());
+    }
+    return "";
+  }
+
+  public String retrievePreviousVersion(String userId, String documentTitle, int revisionNumber) {
+    String fullUrl = SERVICE_IP + REVISION_URI + "?network-id=" + NETWORK_ID + "&document-name="+documentTitle +
+            "&your-user-id=" + userId + "&revision-number=" + revisionNumber;
+    try {
+      ResponseEntity<String> response = restTemplate.getForEntity(fullUrl, String.class);
+
+      if (response.getStatusCode().is2xxSuccessful()) {
+        System.out.println(response.getBody());
+        return response.getBody();
+      }
+
+    } catch (HttpClientErrorException e) {
+      System.out.println("HTTP error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
+    } catch (Exception e) {
+      System.out.println("Unexpected error: " + e.getMessage());
+    }
+    return "";
+  }
+
+  public String retrieveDocumentContents(String userId, String documentTitle) {
+    String fullUrl = SERVICE_IP + DOWNLOAD_URI + "?network-id=" + NETWORK_ID + "&document-name="+documentTitle +
+            "&your-user-id=" + userId;
+    try {
+      ResponseEntity<String> response = restTemplate.getForEntity(fullUrl, String.class);
+
+      if (response.getStatusCode().is2xxSuccessful()) {
+        System.out.println(response.getBody());
+        return response.getBody();
+      }
+
+    } catch (HttpClientErrorException e) {
+      System.out.println("HTTP error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
+    } catch (Exception e) {
+      System.out.println("Unexpected error: " + e.getMessage());
+    }
+    return "";
+  }
+
+  public String retrieveDocumentDifferences(String userId, String fstDocumentTitle, String sndDocumentTitle) {
+    String fullUrl = SERVICE_IP + DIFFERENCE_URI + "?network-id=" + NETWORK_ID + "&fst-doc-name="+ fstDocumentTitle
+            + "&snd-doc-name=" + sndDocumentTitle + "&your-user-id=" + userId;
+    try {
+      ResponseEntity<String> response = restTemplate.getForEntity(fullUrl, String.class);
+
+      if (response.getStatusCode().is2xxSuccessful()) {
+        System.out.println(response.getBody());
+        return response.getBody();
+      }
+
+    } catch (HttpClientErrorException e) {
+      System.out.println("HTTP error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
+    } catch (Exception e) {
+      System.out.println("Unexpected error: " + e.getMessage());
+    }
+    return "";
+  }
 
   /*
-  @GetMapping
-  @GetMapping("/check-for-doc")
-  @GetMapping("/see-previous")
-  @GetMapping("/see-stats")
-  @GetMapping("/download")
-  @GetMapping("/compare")
   @PostMapping("/upload")
   @DeleteMapping("/delete")
   @PatchMapping("/share")
