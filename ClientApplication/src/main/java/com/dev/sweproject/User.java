@@ -65,4 +65,13 @@ public class User {
         + gender + ", birthday=" + birthday + ", profession=" + profession + "]";
   }
 
+  public static boolean isValidUser(User user) {
+    return !user.getEmail().isEmpty() && !user.getName().isEmpty() && !user.getProfession().isEmpty()
+            && !user.getBirthday().isEmpty() && !user.getGender().isEmpty() && !user.getPassword().isEmpty()
+            && user.getEmail().contains(".") && user.getBirthday().length() == 10 && user.getBirthday().contains("-")
+            && user.getBirthday().substring(user.getBirthday().indexOf("-")+1).contains("-");
+
+
+  }
+
 }
