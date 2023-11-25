@@ -57,6 +57,16 @@ function refresh_doc()
     load_doc_stats();
 }
 
+function download_helper(content, filename)
+{
+    const a = document.createElement('a');
+    const file = new Blob([content], {type: 'text/plain'});
+    a.href = URL.createObjectURL(file);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
 function download_version()
 {
     let version_val = $('#version-select').val();
@@ -66,12 +76,14 @@ function download_version()
     }
     console.log("Downloading version: " + version_val);
 
-    // TODO
+    let idx = Number(version_val);
+    let old_data = data['previousVersions'][idx];
+    download_helper(atob(old_data['fileString'].substring(1)), old_data['title'] + '_v' + idx);
 }
 
 function download_latest()
 {
-    // TODO
+    download_helper(atob(data['fileString'].substring(1)), data['title']);
 }
 
 function upload()
