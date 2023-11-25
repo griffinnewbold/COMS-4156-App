@@ -117,7 +117,29 @@ function upload()
         return;
     }
 
-    // TODO
+    // Get doc contents from filepicker
+    const file = filepicker.files[0];
+    const reader = new FileReader();
+    let contents = '';
+    reader.onload = (e) => {
+        contents = e.target.result;
+
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState != 4) {
+                return;
+            }
+            if (xhr.status != 200) {
+                alert("Server error: " + xhr.statusText);
+                return;
+            }
+
+            location.reload();
+        };
+        xhr.open("POST", "/upload-document?user_id=" + user_id + "&doc_name=" + data['title'] + "&contents=" + contents);
+        xhr.send();
+    };
+    reader.readAsText(file);
 }
 
 function share()
