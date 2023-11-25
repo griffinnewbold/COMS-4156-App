@@ -11,7 +11,8 @@ function render_docs(filter_string)
         let contents = data[i]["contents"]
 
         if (filter_string.length > 0) {
-            if (!(name.toLowerCase().includes(filter_string.toLowerCase()))) {
+            if (!(name.toLowerCase().includes(filter_string)) &&
+                !(contents.toLowerCase().includes(filter_string))) {
                 continue;
             }
         }
@@ -41,7 +42,7 @@ function render_docs(filter_string)
 
 function search()
 {
-    let filter_string = $('#searchbox').val();
+    let filter_string = $('#searchbox').val().toLowerCase();
     console.log("Searching for " + filter_string);
     render_docs(filter_string);
 }
