@@ -265,10 +265,10 @@ public class MainController {
       if (response.getStatusCode().is2xxSuccessful()) {
         return response.getBody();
       }
-
+      return "failure: " + response.getStatusCode() + " - " + response.getBody();
     } catch (HttpClientErrorException e) {
       System.out.println("HTTP error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
-      return "failure: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
+      return "failure: " + e.getStatusCode() + " - " + e.getResponseBodyAsString();
     } catch (Exception e) {
       System.out.println("Unexpected error: " + e.getMessage());
       return "error: An unexpected error has occurred.";
