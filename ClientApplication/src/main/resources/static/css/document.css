@@ -41,6 +41,10 @@
     text-align: left;
 }
 
+#stats-data {
+    white-space: pre-wrap;
+}
+
 .manage-section {
     margin-top: 20px;
 }

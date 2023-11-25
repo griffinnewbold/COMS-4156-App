@@ -5,14 +5,36 @@ function goback()
     location.href = "dashboard?user_id=" + user_id;
 }
 
+function load_doc_stats()
+{
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState != 4) {
+            return;
+        }
+        if (xhr.status != 200) {
+            alert("Server error: " + xhr.statusText);
+            return;
+        }
+        const stats_lines = JSON.parse(JSON.parse(xhr.responseText)).split('\n');
+
+        // Do our best to parse the stats text for info that is relevant to users.
+        // If the format of the statistics sent by the backend changes, this will need updating.
+        // We want line 2 (wc), line 3 (user count), and the final line (version count).
+        let stats = stats_lines[1] + '\n' + stats_lines[2] + '\n' + stats_lines[stats_lines.length - 1]
+        console.log(stats);
+        $('#stats-data').html(stats);
+    };
+    xhr.open("GET", "/retrieve-document-stats?user_id=" + user_id + '&doc_id=' + data['title']);
+    xhr.send();
+}
+
 function refresh_doc()
 {
     // Update doc name, version, and preview
     $('#doc-name-label-text').html(data['title'] + ' (version ' + data['previousVersions'].length + ')');
     $('#preview-data').html(atob(data['fileString'].substring(1)));
-
-    // TODO: update doc statistics
-    $('#stats-data').html('TODO');
+    $('title').html('Documents - ' + data['title']);
 
     // Update providers (id: share-select)
     let prov_html = '<option selected disabled>Choose provider</option>';
@@ -30,6 +52,9 @@ function refresh_doc()
         vers_html = '<option value="' + ver_str + '">' + ver_str + '</option>' + vers_html;
     }
     $('#version-select').html('<option selected disabled>Choose version</option>' + vers_html);
+
+    // Update doc statistics
+    load_doc_stats();
 }
 
 function download_version()
