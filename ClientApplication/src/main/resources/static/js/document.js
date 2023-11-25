@@ -5,6 +5,36 @@ function goback()
     location.href = "dashboard?user_id=" + user_id;
 }
 
+function load_providers()
+{
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState != 4) {
+            return;
+        }
+        if (xhr.status != 200) {
+            alert("Server error: " + xhr.statusText);
+            return;
+        }
+        const users = JSON.parse(JSON.parse(xhr.responseText));
+        console.log(users);
+
+        let prov_html = '<option selected disabled>Choose provider</option>';
+        let providers = data['userId'].split('/');
+        console.log(providers);
+
+        for (let i = 0; i < users.length; i++) {
+            let user = users[i].substring(0, users[i].indexOf('@'));
+            let disabled_str = (providers.includes(user) ? 'disabled' : '');
+            prov_html += '<option ' + disabled_str + ' value="' + user + '">' + user + '</option>'
+        }
+
+        $('#share-select').html(prov_html);
+    };
+    xhr.open("GET", "/usernames");
+    xhr.send();
+}
+
 function load_doc_stats()
 {
     let xhr = new XMLHttpRequest();
@@ -18,10 +48,12 @@ function load_doc_stats()
         }
         const stats_lines = JSON.parse(JSON.parse(xhr.responseText)).split('\n');
 
-        // Do our best to parse the stats text for info that is relevant to users.
-        // If the format of the statistics sent by the backend changes, this will need updating.
-        // We want line 2 (wc), line 3 (user count), and the final line (version count).
-        let stats = stats_lines[1] + '\n' + stats_lines[2] + '\n' + stats_lines[stats_lines.length - 1]
+        let stats = '';
+        for (let i = 1; i < stats_lines.length; i++) {
+            stats += stats_lines[i];
+            if (i != stats_lines.length - 1) stats += '\n';
+        }
+
         console.log(stats);
         $('#stats-data').html(stats);
     };
@@ -36,14 +68,8 @@ function refresh_doc()
     $('#preview-data').html(atob(data['fileString'].substring(1)));
     $('title').html('Documents - ' + data['title']);
 
-    // Update providers (id: share-select)
-    let prov_html = '<option selected disabled>Choose provider</option>';
-    let providers = data['userId'].split('/');
-    for (let i = 0; i < providers.length; i++) {
-        let disabled_str = (providers[i] == user_id ? 'disabled' : '');
-        prov_html += '<option ' + disabled_str + ' value="' + providers[i] + '">' + providers[i] + '</option>'
-    }
-    $('#share-select').html(prov_html);
+    // Update providers
+    load_providers();
 
     // Update version picker
     let vers_html = '';

@@ -159,11 +159,26 @@ public class MainController {
     return sendHttpRequest(fullUrl);
   }
 
+  @GetMapping(value = "/usernames", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> retrieveDocumentStatsAPI() throws JsonProcessingException {
+    ObjectMapper om = new ObjectMapper();
+    return new ResponseEntity<>(om.writeValueAsString(retrieveUsernames()), HttpStatus.OK);
+  }
+
   public String retrieveUsernames() {
     CompletableFuture<List<String>> result = firebaseDataService.getSubcollectionNames();
     try {
      List<String> listOfUsers = result.get();
-     return listOfUsers.toString();
+
+     String list_str = "[";
+     for (int i = 0; i < listOfUsers.size(); i++) {
+       String new_entry = "\"" + listOfUsers.get(i) + "\"";
+       list_str += new_entry;
+       if (i != listOfUsers.size() - 1) list_str += ",";
+     }
+     list_str += "]";
+
+     return list_str;
     } catch (Exception e) {
       System.out.println(e.getMessage());
       return "[]";
