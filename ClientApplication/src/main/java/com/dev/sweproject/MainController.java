@@ -1,18 +1,24 @@
 package com.dev.sweproject;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.HttpClientErrorException;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPatch;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClients;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static com.dev.sweproject.GlobalInfo.*;
 
@@ -80,6 +86,8 @@ public class MainController {
         //retrieveDocumentContents(email.substring(0, email.indexOf('@')), "common aliments");
         //retrieveDocumentDifferences(email.substring(0, email.indexOf('@')), "common aliments",
         //        "jane doe birth");
+        //sendShareRequest(email.substring(0, email.indexOf('@')), "common aliments",
+        //        "mohsin@outlook");
         return "dashboard";
       }
       model.addAttribute("error", "Invalid credentials");
@@ -107,84 +115,63 @@ public class MainController {
 
   public String retrieveDocuments(String userId) {
     String fullUrl = SERVICE_IP + RETRIEVE_URI + "?network-id=" + NETWORK_ID + "&user-id=" + userId;
-
-    try {
-      ResponseEntity<String> response = restTemplate.getForEntity(fullUrl, String.class);
-
-      if (response.getStatusCode().is2xxSuccessful()) {
-        return response.getBody();
-      }
-
-    } catch (HttpClientErrorException e) {
-      System.out.println("HTTP error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
-    } catch (Exception e) {
-      System.out.println("Unexpected error: " + e.getMessage());
-    }
-    return "";
+    return sendHttpRequest(fullUrl);
   }
 
   public String retrieveDocumentStats(String userId, String documentTitle) {
     String fullUrl = SERVICE_IP + STATS_URI + "?network-id=" + NETWORK_ID + "&document-name="+documentTitle +
             "&your-user-id=" + userId;
-    try {
-      ResponseEntity<String> response = restTemplate.getForEntity(fullUrl, String.class);
-
-      if (response.getStatusCode().is2xxSuccessful()) {
-        System.out.println(response.getBody());
-        return response.getBody();
-      }
-
-    } catch (HttpClientErrorException e) {
-      System.out.println("HTTP error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
-    } catch (Exception e) {
-      System.out.println("Unexpected error: " + e.getMessage());
-    }
-    return "";
+    return sendHttpRequest(fullUrl);
   }
 
   public String retrievePreviousVersion(String userId, String documentTitle, int revisionNumber) {
     String fullUrl = SERVICE_IP + REVISION_URI + "?network-id=" + NETWORK_ID + "&document-name="+documentTitle +
             "&your-user-id=" + userId + "&revision-number=" + revisionNumber;
-    try {
-      ResponseEntity<String> response = restTemplate.getForEntity(fullUrl, String.class);
-
-      if (response.getStatusCode().is2xxSuccessful()) {
-        System.out.println(response.getBody());
-        return response.getBody();
-      }
-
-    } catch (HttpClientErrorException e) {
-      System.out.println("HTTP error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
-    } catch (Exception e) {
-      System.out.println("Unexpected error: " + e.getMessage());
-    }
-    return "";
+    return sendHttpRequest(fullUrl);
   }
 
   public String retrieveDocumentContents(String userId, String documentTitle) {
     String fullUrl = SERVICE_IP + DOWNLOAD_URI + "?network-id=" + NETWORK_ID + "&document-name="+documentTitle +
             "&your-user-id=" + userId;
-    try {
-      ResponseEntity<String> response = restTemplate.getForEntity(fullUrl, String.class);
-
-      if (response.getStatusCode().is2xxSuccessful()) {
-        System.out.println(response.getBody());
-        return response.getBody();
-      }
-
-    } catch (HttpClientErrorException e) {
-      System.out.println("HTTP error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
-    } catch (Exception e) {
-      System.out.println("Unexpected error: " + e.getMessage());
-    }
-    return "";
+    return sendHttpRequest(fullUrl);
   }
 
   public String retrieveDocumentDifferences(String userId, String fstDocumentTitle, String sndDocumentTitle) {
     String fullUrl = SERVICE_IP + DIFFERENCE_URI + "?network-id=" + NETWORK_ID + "&fst-doc-name="+ fstDocumentTitle
             + "&snd-doc-name=" + sndDocumentTitle + "&your-user-id=" + userId;
+    return sendHttpRequest(fullUrl);
+  }
+
+  public String sendShareRequest(String userId, String documentTitle, String newUserId) {
+    documentTitle = convertDocumentTitle(documentTitle);
+    String fullUrl = SERVICE_IP + SHARE_URI + "?network-id=" + NETWORK_ID + "&document-name="+ documentTitle
+            + "&your-user-id=" + userId + "&their-user-id=" + newUserId;
+
     try {
-      ResponseEntity<String> response = restTemplate.getForEntity(fullUrl, String.class);
+      HttpClient httpClient = HttpClients.createDefault();
+      HttpPatch httpPatch = new HttpPatch(fullUrl);
+
+      httpPatch.setHeader("Content-Type", "application/json");
+
+      HttpResponse response = httpClient.execute(httpPatch);
+
+      BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+      StringBuilder result = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        result.append(line);
+      }
+      System.out.println("Response from API: " + result);
+
+    } catch (Exception e) {
+      System.out.println("Error: " + e.getMessage());
+    }
+    return "";
+  }
+
+  private String sendHttpRequest(String url) {
+    try {
+      ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
       if (response.getStatusCode().is2xxSuccessful()) {
         System.out.println(response.getBody());
@@ -199,10 +186,21 @@ public class MainController {
     return "";
   }
 
+  private String convertDocumentTitle(String title) {
+    StringBuilder result = new StringBuilder();
+    for (int i = 0; i < title.length(); i++) {
+      if (title.charAt(i) != ' ') {
+        result.append(title.charAt(i));
+      } else {
+        result.append("%20");
+      }
+    }
+    return result.toString();
+  }
+
   /*
   @PostMapping("/upload")
   @DeleteMapping("/delete")
-  @PatchMapping("/share")
    */
 
 

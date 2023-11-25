@@ -10,6 +10,7 @@ public class ClientApplication {
 
   private static FirebaseService firebaseDataService;
 
+
   public static void main(String[] args) {
     try {
       ApplicationContext context = SpringApplication.run(ClientApplication.class, args);
