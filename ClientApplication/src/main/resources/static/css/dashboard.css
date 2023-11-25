@@ -44,4 +44,14 @@ hr {
     width: 80%;
     height: 240px;
     margin-left: 10%;
+    overflow-y: hidden;
+}
+
+.preview-data {
+    font-size: 10px;
+    text-align: left;
+    padding-left: 6px;
+    padding-right: 6px;
+    color: black;
+    white-space: pre-wrap;
 }
