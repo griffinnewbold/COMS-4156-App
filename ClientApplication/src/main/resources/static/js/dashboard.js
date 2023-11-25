@@ -46,27 +46,29 @@ function search()
 function fetch_docs()
 {
     console.log("Loading documents...");
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState != 4) {
+            return;
+        }
+        if (xhr.status != 200) {
+            alert("Server error: " + xhr.statusText);
+            return;
+        }
+        let clean_data = [];
+        const docs = JSON.parse(JSON.parse(xhr.responseText));
 
-    // TODO: in practice, we will make a backend call and use that to render the docs.
-    // however, since the backend isn't ready yet, for now we use some mock data.
-
-    let test_data = [
-        {"name": "Hello",
-         "id": "id-A"},
-        {"name": "World",
-         "id": "id-B"},
-        {"name": "Hello world",
-         "id": "id-C"},
-        {"name": "Test Document",
-         "id": "id-D"},
-        {"name": "Hello world 2",
-         "id": "id-E"},
-        {"name": "hello world 3",
-         "id": "id-F"}
-    ]
-
-    data = test_data;
-    render_docs("");
+        for (let i = 0; i < docs.length; i++) {
+            clean_data.push({"name": docs[i]['title'],
+                             "id": docs[i]['docId'],
+                             "contents": atob(docs[i]['fileString'].substring(1))});
+        }
+        console.log(clean_data);
+        data = clean_data;
+        render_docs("");
+    };
+    xhr.open("GET", "/retrieve-documents?user_id=" + user_id);
+    xhr.send();
 }
 
 function logout()
