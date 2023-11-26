@@ -64,6 +64,7 @@ function refresh_doc()
     $('#doc-name-label-text').html(data['title'] + ' (version ' + data['previousVersions'].length + ')');
     $('#preview-data').html(atob(data['fileString'].substring(1)));
     $('title').html('Documents - ' + data['title']);
+    console.log(atob(data['fileString'].substring(1))); //
 
     // Update providers
     load_providers();
@@ -130,6 +131,7 @@ function upload()
     let contents = '';
     reader.onload = (e) => {
         contents = e.target.result;
+        console.log("Contents: " + contents);
 
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
@@ -145,7 +147,8 @@ function upload()
             location.reload();
         };
         xhr.open("POST",
-            "/upload-document?user_id=" + user_id + "&doc_name=" + data['title'] + "&contents=" + contents);
+            "/upload-document?user_id=" + user_id + "&doc_name=" + data['title'] +
+                "&contents=" + encodeURIComponent(contents));
         xhr.send();
     };
     reader.readAsText(file);

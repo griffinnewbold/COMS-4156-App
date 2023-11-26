@@ -158,7 +158,15 @@ public class MainController {
             "&your-user-id=" + userId + "&revision-number=" + revisionNumber;
     return sendHttpRequest(fullUrl);
   }
-  
+
+  @GetMapping(value = "/document-contents", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> retrieveDocumentContentsAPI(@RequestParam(value = "user_id") String userId,
+                                                      @RequestParam(value = "doc_name") String documentName)
+          throws JsonProcessingException {
+    ObjectMapper om = new ObjectMapper();
+    return new ResponseEntity<>(om.writeValueAsString(retrieveDocumentContents(userId, documentName)), HttpStatus.OK);
+  }
+
   public String retrieveDocumentContents(String userId, String documentTitle) {
     String fullUrl = SERVICE_IP + DOWNLOAD_URI + "?network-id=" + NETWORK_ID + "&document-name="+documentTitle +
             "&your-user-id=" + userId;
@@ -178,7 +186,7 @@ public class MainController {
   }
 
   @GetMapping(value = "/usernames", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> retrieveDocumentStatsAPI() throws JsonProcessingException {
+  public ResponseEntity<?> retrieveUsernamesAPI() throws JsonProcessingException {
     ObjectMapper om = new ObjectMapper();
     return new ResponseEntity<>(om.writeValueAsString(retrieveUsernames()), HttpStatus.OK);
   }
@@ -240,7 +248,7 @@ public class MainController {
   }
 
   @DeleteMapping(value = "/delete-document", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> postUploadRequestAPI(@RequestParam(value = "user_id") String userId,
+  public ResponseEntity<?> postDeleteRequestAPI(@RequestParam(value = "user_id") String userId,
                                                 @RequestParam(value = "doc_name") String documentName)
           throws JsonProcessingException {
     ObjectMapper om = new ObjectMapper();
