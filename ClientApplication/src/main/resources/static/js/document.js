@@ -101,7 +101,14 @@ function download_version()
 
     let idx = Number(version_val);
     let old_data = data['previousVersions'][idx];
-    download_helper(atob(old_data['fileString'].substring(1)), old_data['title'] + '_v' + idx);
+
+    let filename_parts = old_data['title'].split('.');
+    let filename = filename_parts[0] + '_v' + idx;
+    for (let i = 1; i < filename_parts.length; i++) {
+        filename += ('.' + filename_parts[i]);
+    }
+
+    download_helper(atob(old_data['fileString'].substring(1)), filename);
 }
 
 function download_latest()
@@ -133,6 +140,7 @@ function upload()
                 alert("Server error: " + xhr.statusText);
                 return;
             }
+            console.log("Upload response: " + xhr.responseText);
 
             location.reload();
         };
@@ -160,6 +168,7 @@ function share()
             alert("Server error: " + xhr.statusText);
             return;
         }
+        console.log("Share response: " + xhr.responseText);
 
         location.reload();
     };
@@ -178,6 +187,7 @@ function delete_doc()
             alert("Server error: " + xhr.statusText);
             return;
         }
+        console.log("Delete response: " + xhr.responseText);
 
         goback();
     };

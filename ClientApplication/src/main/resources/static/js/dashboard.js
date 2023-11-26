@@ -117,6 +117,7 @@ function upload()
                 alert("Server error: " + xhr.statusText);
                 return;
             }
+            console.log("Upload response: " + xhr.responseText);
 
             location.reload();
         };
