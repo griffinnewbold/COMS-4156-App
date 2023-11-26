@@ -8,9 +8,11 @@ function render_docs(filter_string)
     for (let i = 0; i < data.length; i++) {
         let name = data[i]["name"];
         let id = data[i]["id"];
+        let contents = data[i]["contents"]
 
         if (filter_string.length > 0) {
-            if (!(name.toLowerCase().includes(filter_string.toLowerCase()))) {
+            if (!(name.toLowerCase().includes(filter_string)) &&
+                !(contents.toLowerCase().includes(filter_string))) {
                 continue;
             }
         }
@@ -24,9 +26,11 @@ function render_docs(filter_string)
         }
 
         doc_html += '<div class="col-md-3">';
-        doc_html += '<a href=document?id=' + id + '>'
+        doc_html += '<a href=document?user_id=' + user_id + '&doc_id=' + id + '>'
         doc_html += '<div class="doc-link"><br>'
-        doc_html += '<div class="doc-image"></div><br>'
+        doc_html += '<div class="doc-image">'
+        doc_html += '<p class="preview-data">' + contents + '</p>'
+        doc_html += '</div><br>'
         doc_html += '<p>' + name + '</p>'
         doc_html += '</div></a></div>';
 
@@ -38,7 +42,7 @@ function render_docs(filter_string)
 
 function search()
 {
-    let filter_string = $('#searchbox').val();
+    let filter_string = $('#searchbox').val().toLowerCase();
     console.log("Searching for " + filter_string);
     render_docs(filter_string);
 }
@@ -46,27 +50,29 @@ function search()
 function fetch_docs()
 {
     console.log("Loading documents...");
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState != 4) {
+            return;
+        }
+        if (xhr.status != 200) {
+            alert("Server error: " + xhr.statusText);
+            return;
+        }
+        let clean_data = [];
+        const docs = JSON.parse(JSON.parse(xhr.responseText));
 
-    // TODO: in practice, we will make a backend call and use that to render the docs.
-    // however, since the backend isn't ready yet, for now we use some mock data.
-
-    let test_data = [
-        {"name": "Hello",
-         "id": "id-A"},
-        {"name": "World",
-         "id": "id-B"},
-        {"name": "Hello world",
-         "id": "id-C"},
-        {"name": "Test Document",
-         "id": "id-D"},
-        {"name": "Hello world 2",
-         "id": "id-E"},
-        {"name": "hello world 3",
-         "id": "id-F"}
-    ]
-
-    data = test_data;
-    render_docs("");
+        for (let i = 0; i < docs.length; i++) {
+            clean_data.push({"name": docs[i]['title'],
+                             "id": docs[i]['docId'],
+                             "contents": atob(docs[i]['fileString'].substring(1))});
+        }
+        console.log(clean_data);
+        data = clean_data;
+        render_docs("");
+    };
+    xhr.open("GET", "/retrieve-documents?user_id=" + user_id);
+    xhr.send();
 }
 
 function logout()
@@ -79,7 +85,7 @@ function upload()
     // Steps:
     // 1. make sure the user selected a file
     // 2. make sure the user gave a name
-    // 3. try and update!
+    // 3. try and upload!
 
     const filepicker = document.getElementById('filepicker');
     if (filepicker.files.length == 0) {
@@ -93,9 +99,32 @@ function upload()
         return;
     }
 
-    // TODO: once the endpoint to upload data is setup, call that from here.
+    // TODO: make sure this name doesnt already identify a document? OR what happens if it does? it's ok if it just updates
 
-    location.reload();
+    // Get doc contents from filepicker
+    const file = filepicker.files[0];
+    const reader = new FileReader();
+    let contents = '';
+    reader.onload = (e) => {
+        contents = e.target.result;
+
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState != 4) {
+                return;
+            }
+            if (xhr.status != 200) {
+                alert("Server error: " + xhr.statusText);
+                return;
+            }
+            console.log("Upload response: " + xhr.responseText);
+
+            location.reload();
+        };
+        xhr.open("POST", "/upload-document?user_id=" + user_id + "&doc_name=" + name + "&contents=" + contents);
+        xhr.send();
+    };
+    reader.readAsText(file);
 }
 
 $(document).ready(() => {

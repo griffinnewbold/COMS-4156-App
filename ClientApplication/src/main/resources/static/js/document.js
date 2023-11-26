@@ -2,18 +2,92 @@ let data = {}
 
 function goback()
 {
-    location.href = "dashboard";
+    location.href = "dashboard?user_id=" + user_id;
+}
+
+function load_providers()
+{
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState != 4) {
+            return;
+        }
+        if (xhr.status != 200) {
+            alert("Server error: " + xhr.statusText);
+            return;
+        }
+        const users = JSON.parse(JSON.parse(xhr.responseText));
+
+        let prov_html = '<option selected disabled>Choose provider</option>';
+        let providers = data['userId'].split('/');
+
+        for (let i = 0; i < users.length; i++) {
+            let user = users[i].substring(0, users[i].indexOf('@'));
+            let disabled_str = (providers.includes(user) ? 'disabled' : '');
+            prov_html += '<option ' + disabled_str + ' value="' + user + '">' + user + '</option>'
+        }
+
+        $('#share-select').html(prov_html);
+    };
+    xhr.open("GET", "/usernames");
+    xhr.send();
+}
+
+function load_doc_stats()
+{
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState != 4) {
+            return;
+        }
+        if (xhr.status != 200) {
+            alert("Server error: " + xhr.statusText);
+            return;
+        }
+        const stats_lines = JSON.parse(JSON.parse(xhr.responseText)).split('\n');
+
+        let stats = '';
+        for (let i = 1; i < stats_lines.length; i++) {
+            stats += stats_lines[i];
+            if (i != stats_lines.length - 1) stats += '\n';
+        }
+
+        $('#stats-data').html(stats);
+    };
+    xhr.open("GET", "/retrieve-document-stats?user_id=" + user_id + '&doc_id=' + data['title']);
+    xhr.send();
 }
 
 function refresh_doc()
 {
-    // TODO: once the HTML of the page is finished, add code here to populate the page with data.
-    // things to update:
-    // - doc name and version (id: doc-name-label-text)
-    // - doc preview (id: preview-data)
-    // - doc statistics (id: stats-data)
-    // - providers / patients dropdown (id: share-select)
-    // - versions picker dropdown (id: version-select)
+    // Update doc name, version, and preview
+    $('#doc-name-label-text').html(data['title'] + ' (version ' + data['previousVersions'].length + ')');
+    $('#preview-data').html(atob(data['fileString'].substring(1)));
+    $('title').html('Documents - ' + data['title']);
+
+    // Update providers
+    load_providers();
+
+    // Update version picker
+    let vers_html = '';
+    for (let i = 0; i < data['previousVersions'].length - 1; i++) {
+        let ver_str = (i + 1).toString();
+        vers_html = '<option value="' + ver_str + '">' + ver_str + '</option>' + vers_html;
+    }
+    $('#version-select').html('<option selected disabled>Choose version</option>' + vers_html);
+
+    // Update doc statistics
+    load_doc_stats();
+}
+
+function download_helper(content, filename)
+{
+    const a = document.createElement('a');
+    const file = new Blob([content], {type: 'text/plain'});
+    a.href = URL.createObjectURL(file);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
 }
 
 function download_version()
@@ -25,12 +99,21 @@ function download_version()
     }
     console.log("Downloading version: " + version_val);
 
-    // TODO
+    let idx = Number(version_val);
+    let old_data = data['previousVersions'][idx];
+
+    let filename_parts = old_data['title'].split('.');
+    let filename = filename_parts[0] + '_v' + idx;
+    for (let i = 1; i < filename_parts.length; i++) {
+        filename += ('.' + filename_parts[i]);
+    }
+
+    download_helper(atob(old_data['fileString'].substring(1)), filename);
 }
 
 function download_latest()
 {
-    // TODO
+    download_helper(atob(data['fileString'].substring(1)), data['title']);
 }
 
 function upload()
@@ -41,7 +124,31 @@ function upload()
         return;
     }
 
-    // TODO
+    // Get doc contents from filepicker
+    const file = filepicker.files[0];
+    const reader = new FileReader();
+    let contents = '';
+    reader.onload = (e) => {
+        contents = e.target.result;
+
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState != 4) {
+                return;
+            }
+            if (xhr.status != 200) {
+                alert("Server error: " + xhr.statusText);
+                return;
+            }
+            console.log("Upload response: " + xhr.responseText);
+
+            location.reload();
+        };
+        xhr.open("POST",
+            "/upload-document?user_id=" + user_id + "&doc_name=" + data['title'] + "&contents=" + contents);
+        xhr.send();
+    };
+    reader.readAsText(file);
 }
 
 function share()
@@ -53,27 +160,74 @@ function share()
     }
     console.log("Sharing with: " + share_val);
 
-    // TODO
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState != 4) {
+            return;
+        }
+        if (xhr.status != 200) {
+            alert("Server error: " + xhr.statusText);
+            return;
+        }
+        console.log("Share response: " + xhr.responseText);
+
+        location.reload();
+    };
+    xhr.open("PATCH",
+        "/share-document?user_id=" + user_id +'&doc_id=' + data['title'] + '&new_user_id=' + share_val);
+    xhr.send();
 }
 
 function delete_doc()
 {
-    // TODO: delete the document
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState != 4) {
+            return;
+        }
+        if (xhr.status != 200) {
+            alert("Server error: " + xhr.statusText);
+            return;
+        }
+        console.log("Delete response: " + xhr.responseText);
 
-    goback();
+        goback();
+    };
+    xhr.open("DELETE", "/delete-document?user_id=" + user_id +'&doc_name=' + data['title']);
+    xhr.send();
 }
 
 function load_document()
 {
-    // TODO: first, load the document data from the backend API.
-    // Until this is implemented, use test data.
+    // load the document data from the backend API, and use it to populate the page.
+    console.log("Loading document " + doc_id + "...");
 
-    let test_data = {
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState != 4) {
+            return;
+        }
+        if (xhr.status != 200) {
+            alert("Server error: " + xhr.statusText);
+            return;
+        }
+        const docs = JSON.parse(JSON.parse(xhr.responseText));
 
+        // Get all the docs, and query them for the doc of interest.
+        // is this efficient? no. is it fine for our purposes? yes.
+        for (let i = 0; i < docs.length; i++) {
+            if (doc_id != docs[i]['docId']) {
+                continue;
+            } else {
+                data = docs[i];
+            }
+        }
+
+        console.log(data);
+        refresh_doc();
     };
-
-    data = test_data;
-    refresh_doc();
+    xhr.open("GET", "/retrieve-documents?user_id=" + user_id);
+    xhr.send();
 }
 
 $(document).ready(() => {

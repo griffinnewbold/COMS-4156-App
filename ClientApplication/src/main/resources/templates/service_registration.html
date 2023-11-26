@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate Network Key</title>
+    <style>
+        body {
+            text-align: center;
+            margin-top: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        button {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            margin-top: 120px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        #bottom {
+            position: fixed;
+            width:100%;
+            bottom:100px;
+        }
+
+        #form {
+            position: fixed;
+            width:100%;
+            top:100px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h1>Generate Network Key</h1>
+    <form id = "form" th:action="@{/generate-key}" method="post">
+        <button type="submit">Generate Network Key</button>
+    </form>
+</div>
+<span th:if="${key}" style="color: black;" th:text="${key}"></span><br>
+<span th:if="${error}" style="color: red;" th:text="${error}"></span><br>
+<div>
+    <p>Copy this key and paste it into the NETWORK_ID variable slot in GlobalInfo.java.
+       Then relaunch the client app program to allow changes to take affect!
+    </p>
+    <p>
+       WARNING: Giving someone else your network id allows them to make modifications to your data!
+    </p>
+</div>
+
+<!-- Buttons at the bottom -->
+<div id="bottom">
+    <a th:href="@{/home}">
+        <button>Home</button>
+    </a>
+    <a th:href="@{/login}">
+        <button>Login</button>
+    </a>
+    <a th:href="@{/register}">
+        <button>Register</button>
+    </a>
+</div>
+</body>
+</html>

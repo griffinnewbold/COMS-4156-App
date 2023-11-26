@@ -14,13 +14,13 @@
         }
 
         #options {
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
-        #login, #register {
+        #login, #register, #generateKey {
             display: block;
             margin: 10px auto;
-            width: 100px;
+            width: 150px; /* Adjusted width for the new button */
             padding: 10px 15px;
             text-decoration: none;
             color: #fff;
@@ -28,15 +28,34 @@
             border: 1px solid #007bff;
             border-radius: 5px;
         }
+
+        #bottom {
+            position: fixed;
+            width:100%;
+            bottom:100px;
+        }
+
+        #top {
+            position: fixed;
+            width:100%;
+            top:100px;
+        }
     </style>
 </head>
 <body>
-<div>
+<div id="top">
     <h1>Welcome! Login or Register Below!</h1>
     <div id="options">
         <a href="/login" id="login">Login</a>
         <a href="/register" id="register">Register</a>
     </div>
 </div>
+
+<!-- Additional header and button at the bottom of the page -->
+<div id="bottom">
+    <h2>Is your organization new to the app?</h2>
+    <a href="/generate-key" id="generateKey">Generate a Network Key</a>
+</div>
+
 </body>
 </html>
