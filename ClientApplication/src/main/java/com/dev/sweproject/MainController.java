@@ -2,7 +2,6 @@ package com.dev.sweproject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
@@ -11,7 +10,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +19,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -53,6 +50,24 @@ public class MainController {
     model.addAttribute("listProfession", listProfession);
 
     return "register_form";
+  }
+
+  @GetMapping("/generate-key")
+  public String generateKey() {
+    return "service_registration";
+  }
+
+  @PostMapping("/generate-key")
+  public String postNetworkRequest(Model model) {
+    String networkResult = postServiceRegistrationRequest().substring(9);
+
+    if (networkResult.contains("error")) {
+      model.addAttribute("error", "An error has occurred please try again later.");
+      return "service_registration";
+    }
+    model.addAttribute("key", networkResult.substring(networkResult.indexOf(":")+2,
+            networkResult.length()-2));
+    return "service_registration";
   }
 
   @PostMapping("/register")
@@ -156,6 +171,12 @@ public class MainController {
     return sendHttpRequest(fullUrl);
   }
 
+  public String retrieveDocumentExistence(String userId, String documentTitle) {
+    String fullUrl = SERVICE_IP + SEARCH_URI + "?network-id=" + NETWORK_ID + "&document-name="+ documentTitle
+            + "&your-user-id=" + userId;
+    return sendHttpRequest(fullUrl);
+  }
+
   @GetMapping(value = "/usernames", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> retrieveDocumentStatsAPI() throws JsonProcessingException {
     ObjectMapper om = new ObjectMapper();
@@ -255,7 +276,8 @@ public class MainController {
                                                 @RequestParam(value = "contents") String contents)
           throws JsonProcessingException {
     ObjectMapper om = new ObjectMapper();
-    return new ResponseEntity<>(om.writeValueAsString(postUploadRequest(userId, documentName, contents)), HttpStatus.OK);
+    return new ResponseEntity<>(om.writeValueAsString(
+            postUploadRequest(userId, documentName, contents)), HttpStatus.OK);
   }
 
   public String postUploadRequest(String userId, String documentTitle, String contents) {

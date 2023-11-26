@@ -144,7 +144,8 @@ function upload()
 
             location.reload();
         };
-        xhr.open("POST", "/upload-document?user_id=" + user_id + "&doc_name=" + data['title'] + "&contents=" + contents);
+        xhr.open("POST",
+            "/upload-document?user_id=" + user_id + "&doc_name=" + data['title'] + "&contents=" + contents);
         xhr.send();
     };
     reader.readAsText(file);
@@ -172,7 +173,8 @@ function share()
 
         location.reload();
     };
-    xhr.open("PATCH", "/share-document?user_id=" + user_id +'&doc_id=' + data['title'] + '&new_user_id=' + share_val);
+    xhr.open("PATCH",
+        "/share-document?user_id=" + user_id +'&doc_id=' + data['title'] + '&new_user_id=' + share_val);
     xhr.send();
 }
 
