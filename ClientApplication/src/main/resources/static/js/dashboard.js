@@ -71,7 +71,7 @@ function fetch_docs()
         data = clean_data;
         render_docs("");
     };
-    xhr.open("GET", "/retrieve-documents?user_id=" + user_id);
+    xhr.open("GET", "/retrieve-documents?user_id=" + encodeURIComponent(user_id));
     xhr.send();
 }
 
@@ -121,7 +121,9 @@ function upload()
 
             location.reload();
         };
-        xhr.open("POST", "/upload-document?user_id=" + user_id + "&doc_name=" + name + "&contents=" + contents);
+        xhr.open("POST", "/upload-document?user_id=" + encodeURIComponent(user_id)
+            + "&doc_name=" + encodeURIComponent(name)
+            + "&contents=" + encodeURIComponent(contents));
         xhr.send();
     };
     reader.readAsText(file);

@@ -54,7 +54,8 @@ function load_doc_stats()
 
         $('#stats-data').html(stats);
     };
-    xhr.open("GET", "/retrieve-document-stats?user_id=" + user_id + '&doc_id=' + data['title']);
+    xhr.open("GET", "/retrieve-document-stats?user_id=" + encodeURIComponent(user_id)
+             + '&doc_id=' + encodeURIComponent(data['title']));
     xhr.send();
 }
 
@@ -147,8 +148,9 @@ function upload()
             location.reload();
         };
         xhr.open("POST",
-            "/upload-document?user_id=" + user_id + "&doc_name=" + data['title'] +
-                "&contents=" + encodeURIComponent(contents));
+            "/upload-document?user_id=" + encodeURIComponent(user_id)
+                + "&doc_name=" + encodeURIComponent(data['title'])
+                + "&contents=" + encodeURIComponent(contents));
         xhr.send();
     };
     reader.readAsText(file);
@@ -177,7 +179,9 @@ function share()
         location.reload();
     };
     xhr.open("PATCH",
-        "/share-document?user_id=" + user_id +'&doc_id=' + data['title'] + '&new_user_id=' + share_val);
+        "/share-document?user_id=" + encodeURIComponent(user_id)
+            + '&doc_id=' + encodeURIComponent(data['title'])
+            + '&new_user_id=' + encodeURIComponent(share_val));
     xhr.send();
 }
 
@@ -196,7 +200,8 @@ function delete_doc()
 
         goback();
     };
-    xhr.open("DELETE", "/delete-document?user_id=" + user_id +'&doc_name=' + data['title']);
+    xhr.open("DELETE", "/delete-document?user_id=" + encodeURIComponent(user_id)
+             + '&doc_name=' + encodeURIComponent(data['title']));
     xhr.send();
 }
 
@@ -235,7 +240,7 @@ function load_document()
         console.log(data);
         refresh_doc();
     };
-    xhr.open("GET", "/retrieve-documents?user_id=" + user_id);
+    xhr.open("GET", "/retrieve-documents?user_id=" + encodeURIComponent(user_id));
     xhr.send();
 }
 
