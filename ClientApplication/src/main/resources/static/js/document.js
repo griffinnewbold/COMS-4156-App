@@ -218,14 +218,20 @@ function load_document()
 
         // Get all the docs, and query them for the doc of interest.
         // is this efficient? no. is it fine for our purposes? yes.
+        let found_doc = false;
         for (let i = 0; i < docs.length; i++) {
             if (doc_id != docs[i]['docId']) {
                 continue;
             } else {
                 data = docs[i];
+                found_doc = true;
+                break;
             }
         }
 
+        if (!found_doc) {
+            goback();
+        }
         console.log(data);
         refresh_doc();
     };

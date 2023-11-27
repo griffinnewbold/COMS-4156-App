@@ -179,6 +179,14 @@ public class MainController {
     return sendHttpRequest(fullUrl);
   }
 
+  @GetMapping(value = "/check-for-document", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> retrieveDocumentExistenceAPI(@RequestParam(value = "user_id") String userId,
+                                                        @RequestParam(value = "doc_name") String documentName)
+          throws JsonProcessingException {
+    ObjectMapper om = new ObjectMapper();
+    return new ResponseEntity<>(om.writeValueAsString(retrieveDocumentExistence(userId, documentName)), HttpStatus.OK);
+  }
+
   public String retrieveDocumentExistence(String userId, String documentTitle) {
     String fullUrl = SERVICE_IP + SEARCH_URI + "?network-id=" + NETWORK_ID + "&document-name="+ documentTitle
             + "&your-user-id=" + userId;
