@@ -2,9 +2,12 @@ package com.dev.sweproject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.*;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * The main driver class for the application.
+ */
 @SpringBootApplication
 public class ClientApplication {
 
