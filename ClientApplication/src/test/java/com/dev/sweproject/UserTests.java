@@ -11,11 +11,17 @@ class UserTests {
 
   private static User testUser;
 
+  /**
+   * Tests for successful creation of user.
+   */
   @BeforeAll
   public static void setupUserForTesting() {
     testUser = new User();
   }
 
+  /**
+   * Tests for correct setting of user's name.
+   */
   @Test
   @Order(1)
   public void nameTest() {
@@ -25,6 +31,9 @@ class UserTests {
     assertEquals("Griffin", testUser.getName());
   }
 
+  /**
+   * Tests for correct setting of user's email.
+   */
   @Test
   @Order(2)
   public void emailTest() {
@@ -34,6 +43,9 @@ class UserTests {
     assertEquals("randomemail@service.com", testUser.getEmail());
   }
 
+  /**
+   * Tests for correct setting of user's password.
+   */
   @Test
   @Order(3)
   public void passwordTest() {
@@ -43,6 +55,9 @@ class UserTests {
     assertEquals("mypass", testUser.getPassword());
   }
 
+  /**
+   * Tests for correct setting of user's gender.
+   */
   @Test
   @Order(4)
   public void genderTest() {
@@ -52,8 +67,9 @@ class UserTests {
     assertEquals("male", testUser.getGender());
   }
 
-
-
+  /**
+   * Tests for correct setting of user's birthday.
+   */
   @Test
   @Order(7)
   public void birthdayTest() {
@@ -63,6 +79,9 @@ class UserTests {
     assertEquals("10/30/2002", testUser.getBirthday());
   }
 
+  /**
+   * Tests for correct setting of user's profession.
+   */
   @Test
   @Order(8)
   public void professionTest() {
@@ -72,6 +91,9 @@ class UserTests {
     assertEquals("Software Developer", testUser.getProfession());
   }
 
+  /**
+   * Tests for correct formatting of user details returned as string.
+   */
   @Test
   @Order(9)
   public void toStringTest() {

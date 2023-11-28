@@ -53,7 +53,14 @@ public class FirebaseService {
     return database.getReference();
   }
 
-
+  /**
+   * Confirm whether user-inputted credentials are valid
+   *
+   * @param email A String denoting the email of the app user.
+   * @param password A String denoting the password of the app user.
+   * @return A CompletableFuture containing a boolean that affirms whether or not a user with
+   *         the specified email and password exists
+   */
   public CompletableFuture<Boolean> confirmLogin(String email, String password) {
     CompletableFuture<Boolean> future = new CompletableFuture<>();
 
@@ -89,6 +96,12 @@ public class FirebaseService {
     return future;
   }
 
+  /**
+   * Returns a list of the names of subcollections within this collection
+   *
+   * @return A CompletableFuture containing a list of strings representing the names of
+   *         the subcollection within a collection
+   */
   public CompletableFuture<List<String>> getSubcollectionNames() {
     CompletableFuture<List<String>> future = new CompletableFuture<>();
 
