@@ -2,8 +2,6 @@ package com.dev.sweproject;
 
 import org.junit.jupiter.api.*;
 
-import java.sql.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
