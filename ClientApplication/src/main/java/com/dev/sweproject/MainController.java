@@ -219,19 +219,36 @@ public class MainController {
     }
   }
 
+  @GetMapping(value = "/docnames", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> retrieveDocumentNamesAPI(@RequestParam(value = "user_id") String userId)
+                                                    throws JsonProcessingException {
+    ObjectMapper om = new ObjectMapper();
+    return new ResponseEntity<>(om.writeValueAsString(retrieveDocNames(userId)), HttpStatus.OK);
+  }
+
+
+  public String retrieveDocNames(String userId) {
+    String fullUrl = SERVICE_IP + DOC_NAME_URI + "?network-id=" + NETWORK_ID +
+         "&user-id=" + userId;
+    String res = sendHttpRequest(fullUrl);
+    System.out.println(res);
+    return res;
+  }
+
   @PatchMapping(value = "/share-document", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> patchShareRequestAPI(@RequestParam(value = "user_id") String userId,
                                                 @RequestParam(value = "doc_id") String documentId,
                                                 @RequestParam(value = "new_user_id") String newUserId)
-          throws JsonProcessingException {
+                                                throws JsonProcessingException {
     ObjectMapper om = new ObjectMapper();
-    return new ResponseEntity<>(om.writeValueAsString(patchShareRequest(userId, documentId, newUserId)), HttpStatus.OK);
+    return new ResponseEntity<>(om.writeValueAsString(patchShareRequest(userId, documentId,
+        newUserId)), HttpStatus.OK);
   }
 
   public String patchShareRequest(String userId, String documentTitle, String newUserId) {
     documentTitle = convertDocumentTitle(documentTitle);
-    String fullUrl = SERVICE_IP + SHARE_URI + "?network-id=" + NETWORK_ID + "&document-name="+ documentTitle
-            + "&your-user-id=" + userId + "&their-user-id=" + newUserId;
+    String fullUrl = SERVICE_IP + SHARE_URI + "?network-id=" + NETWORK_ID + "&document-name="
+        + documentTitle + "&your-user-id=" + userId + "&their-user-id=" + newUserId;
 
     try {
       HttpClient httpClient = HttpClients.createDefault();

@@ -70,6 +70,9 @@ function refresh_doc()
     // Update providers
     load_providers();
 
+    // Update document options
+    load_documents();
+
     // Update version picker
     let vers_html = '';
     for (let i = 0; i < data['previousVersions'].length - 1; i++) {
@@ -241,6 +244,40 @@ function load_document()
         refresh_doc();
     };
     xhr.open("GET", "/retrieve-documents?user_id=" + encodeURIComponent(user_id));
+    xhr.send();
+}
+
+function compare_documents()
+{
+    location.href = "document_comp?user_id=" + user_id;
+}
+
+function load_documents()
+{
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState != 4) {
+            return;
+        }
+        if (xhr.status != 200) {
+            alert("Server error: " + xhr.statusText);
+            return;
+        }
+        const titles = JSON.parse(JSON.parse(xhr.responseText));
+
+        let doc_html = '<option selected disabled>Choose Document</option>';
+        let title = data['title'];
+
+        for (let i = 0; i < titles.length; i++) {
+            let newTitle = titles[i];
+            let disabled_str = (title === newTitle ? 'disabled' : '');
+            doc_html += '<option ' + disabled_str + ' value="' + newTitle + '">' + newTitle
+                + '</option>'
+        }
+
+        $('#compare-select').html(doc_html);
+    };
+    xhr.open("GET", "/docnames?user_id=" + encodeURIComponent(user_id));
     xhr.send();
 }
 

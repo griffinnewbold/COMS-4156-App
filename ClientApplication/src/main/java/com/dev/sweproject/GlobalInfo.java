@@ -16,6 +16,7 @@ public class GlobalInfo {
   public static final String DOWNLOAD_URI = "/download-doc";
   public static final String RETRIEVE_URI = "/retrieve-docs";
   public static final String REGISTRATION_URI = "/register-client";
+  public static final String DOC_NAME_URI = "/retrieve-doc-names";
 
 
   //IF YOU ARE TESTING FOR CONCURRENCY PLEASE
