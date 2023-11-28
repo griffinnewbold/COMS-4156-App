@@ -13,7 +13,12 @@ public class ClientApplication {
 
   private static FirebaseService firebaseDataService;
 
-
+  /**
+   * Main method for the driver class, executes the Spring application
+   * and makes global assignment.
+   *
+   * @param args commandline arguments (not used)
+   */
   public static void main(String[] args) {
     try {
       ApplicationContext context = SpringApplication.run(ClientApplication.class, args);

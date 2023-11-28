@@ -1,17 +1,20 @@
 package com.dev.sweproject;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import static com.dev.sweproject.GlobalInfo.NETWORK_ID;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-
-import static com.dev.sweproject.GlobalInfo.NETWORK_ID;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * The `FirebaseService` class provides service methods related to the database (DB).
@@ -53,7 +56,14 @@ public class FirebaseService {
     return database.getReference();
   }
 
-
+  /**
+   * Used to confirm whether the user can be logged into the app or not.
+   *
+   * @param email The email provided for login.
+   * @param password The password provided for login
+   * @return A CompletableFuture that will be completed with the true or false or
+   *         completes exceptionally with an error message if an error occurs.
+   */
   public CompletableFuture<Boolean> confirmLogin(String email, String password) {
     CompletableFuture<Boolean> future = new CompletableFuture<>();
 
@@ -64,18 +74,14 @@ public class FirebaseService {
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
         if (dataSnapshot.exists()) {
-          // User with the provided email exists
           String storedPassword = dataSnapshot.child("password").getValue(String.class);
 
           if (storedPassword != null && storedPassword.equals(password)) {
-            // Passwords match
             future.complete(true);
           } else {
-            // Passwords do not match
             future.complete(false);
           }
         } else {
-          // User with the provided email does not exist
           future.complete(false);
         }
       }
@@ -89,6 +95,12 @@ public class FirebaseService {
     return future;
   }
 
+  /**
+   * Retrieves the list of users who exist within the network.
+   *
+   * @return A CompletableFuture that will be completed with the retrieved list or
+   *         completes exceptionally with an error message if an error occurs.
+   */
   public CompletableFuture<List<String>> getSubcollectionNames() {
     CompletableFuture<List<String>> future = new CompletableFuture<>();
 
@@ -114,8 +126,6 @@ public class FirebaseService {
 
     return future;
   }
-
-
 
   /**
    * Add an entry to the specified collection with the key-value association provided.
@@ -296,5 +306,4 @@ public class FirebaseService {
 
     return future;
   }
-
 }
