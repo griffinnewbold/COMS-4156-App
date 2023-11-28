@@ -24,6 +24,9 @@ All of that and how our app specifically works with our service is described in 
 ### How it works with our Service
 To begin we must acknowledge that there is a frontend and a backend (this is true of any app but I digress) When a user performs an action on the frontend a request is sent to the backend of our app, the backend then (if necessary) makes a call to our service
 and retrieves the result. The result is then processed and sent to the frontend for further process and any updates that need to occur as a result. 
+### What makes our App Better/Faster/Cheaper than prior Solutions
+Well to begin our app is 100% free to use! On top of that we are not profit driven at all so we are not selling your data to third-parties to make a quick buck so when we say free we really mean free! Our app also offers more features right out of the gate when it comes to document management than competitors and common tasks like comparing documents is baked right into the app, so no need for third party software to do that bit for you. Due to our simplisitic UI, it is very intuitive to use and it is very lost to get lost within our app. 
+
 
 ## Building and Running a Local Instance
 In order to build and use our service you must install the following (This guide assumes Windows but the Maven README has instructions for both Windows and Mac):
