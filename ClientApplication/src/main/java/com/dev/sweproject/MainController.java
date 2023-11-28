@@ -1,9 +1,30 @@
 package com.dev.sweproject;
 
-import static com.dev.sweproject.GlobalInfo.*;
+//Stylechecker wanted this, otherwise we'd clearly do .*
+import static com.dev.sweproject.GlobalInfo.DELETE_URI;
+import static com.dev.sweproject.GlobalInfo.DIFFERENCE_URI;
+import static com.dev.sweproject.GlobalInfo.DOC_NAME_URI;
+import static com.dev.sweproject.GlobalInfo.DOWNLOAD_URI;
+import static com.dev.sweproject.GlobalInfo.NETWORK_ID;
+import static com.dev.sweproject.GlobalInfo.REGISTRATION_URI;
+import static com.dev.sweproject.GlobalInfo.RETRIEVE_URI;
+import static com.dev.sweproject.GlobalInfo.REVISION_URI;
+import static com.dev.sweproject.GlobalInfo.SEARCH_URI;
+import static com.dev.sweproject.GlobalInfo.SERVICE_IP;
+import static com.dev.sweproject.GlobalInfo.SHARE_URI;
+import static com.dev.sweproject.GlobalInfo.STATS_URI;
+import static com.dev.sweproject.GlobalInfo.UPLOAD_URI;
+import static com.dev.sweproject.GlobalInfo.firebaseDataService;
+import static com.dev.sweproject.GlobalInfo.restTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
@@ -19,14 +40,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
+
 
 /**
  * MainController is responsible for all routing logic as well as making
@@ -105,7 +126,7 @@ public class MainController {
    * Retrieves the documents associated with the specified userId.
    *
    * @param userId A String representing which user to retrieve documents from.
-   * @return A ResponseEntity</?> detailing the success of the procedure.
+   * @return A ResponseEntity detailing the success of the procedure.
    * @throws JsonProcessingException if a JSON error occurs.
    */
   @GetMapping(value = "/retrieve-documents", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -120,7 +141,7 @@ public class MainController {
    *
    * @param userId A String representing the user.
    * @param docId A String representing the documentId.
-   * @return A ResponseEntity</?> detailing the success of the procedure.
+   * @return A ResponseEntity detailing the success of the procedure.
    * @throws JsonProcessingException if a JSON error occurs.
    */
   @GetMapping(value = "/retrieve-document-stats", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -137,7 +158,7 @@ public class MainController {
    *
    * @param userId A String representing the user.
    * @param docName A String representing the document to get contents of.
-   * @return A ResponseEntity</?> detailing the success of the procedure.
+   * @return A ResponseEntity detailing the success of the procedure.
    * @throws JsonProcessingException if a JSON error occurs.
    */
   @GetMapping(value = "/document-contents", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -154,7 +175,7 @@ public class MainController {
    *
    * @param userId A String representing the user.
    * @param docName A String representing the name of the document to search for.
-   * @return A ResponseEntity</?> detailing the success of the procedure.
+   * @return A ResponseEntity detailing the success of the procedure.
    * @throws JsonProcessingException if a JSON error occurs.
    */
   @GetMapping(value = "/check-for-document", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -169,7 +190,7 @@ public class MainController {
   /**
    * Retrieves the usernames in the executing network.
    *
-   * @return A ResponseEntity</?> detailing the success of the procedure.
+   * @return A ResponseEntity detailing the success of the procedure.
    * @throws JsonProcessingException if a JSON error occurs.
    */
   @GetMapping(value = "/usernames", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -182,7 +203,7 @@ public class MainController {
    * Retrieves the names of documents associated with the specified user.
    *
    * @param userId A String representing the user.
-   * @return A ResponseEntity</?> detailing the success of the procedure.
+   * @return A ResponseEntity detailing the success of the procedure.
    * @throws JsonProcessingException if a JSON error occurs.
    */
   @GetMapping(value = "/docnames", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -273,11 +294,11 @@ public class MainController {
    * @param userId   A String representing the current user.
    * @param docName  A String representing the name of the document.
    * @param contents A String representing the file's contents.
-   * @return A ResponseEntity</?> detailing the success of the procedure.
+   * @return A ResponseEntity detailing the success of the procedure.
    * @throws JsonProcessingException if a JSON error occurs.
    */
   @PostMapping(value = "/upload-document", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> postUploadRequestAPI(@RequestParam(value = "user_id") String userId,
+  public ResponseEntity<?> postUploadRequestApi(@RequestParam(value = "user_id") String userId,
                                                 @RequestParam(value = "doc_name") String docName,
                                                 @RequestParam(value = "contents") String contents)
                                                 throws JsonProcessingException {
@@ -291,18 +312,18 @@ public class MainController {
    *
    * @param userId A String representing the current user.
    * @param documentId A String representing the documentId.
-   * @param nUserId A String representing the user to be granted access to the document.
-   * @return A ResponseEntity</?> detailing the success of the procedure.
+   * @param newUser A String representing the user to be granted access to the document.
+   * @return A ResponseEntity detailing the success of the procedure.
    * @throws JsonProcessingException if a JSON error occurs.
    */
   @PatchMapping(value = "/share-document", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> patchShareRequestAPI(@RequestParam(value = "user_id") String userId,
+  public ResponseEntity<?> patchShareRequestApi(@RequestParam(value = "user_id") String userId,
                                                 @RequestParam(value = "doc_id") String documentId,
-                                                @RequestParam(value = "new_user_id") String nUserId)
+                                                @RequestParam(value = "new_user_id") String newUser)
                                                 throws JsonProcessingException {
     ObjectMapper om = new ObjectMapper();
     return new ResponseEntity<>(om.writeValueAsString(patchShareRequest(userId, documentId,
-        nUserId)), HttpStatus.OK);
+        newUser)), HttpStatus.OK);
   }
 
   /**
@@ -310,11 +331,11 @@ public class MainController {
    *
    * @param userId A String representing the user
    * @param docName A String representing the name of the document to be deleted.
-   * @return A ResponseEntity</?> detailing the success of the procedure.
+   * @return A ResponseEntity detailing the success of the procedure.
    * @throws JsonProcessingException if a JSON error occurs.
    */
   @DeleteMapping(value = "/delete-document", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> postDeleteRequestAPI(@RequestParam(value = "user_id") String userId,
+  public ResponseEntity<?> postDeleteRequestApi(@RequestParam(value = "user_id") String userId,
                                                 @RequestParam(value = "doc_name") String docName)
                                                 throws JsonProcessingException {
     ObjectMapper om = new ObjectMapper();
@@ -375,15 +396,17 @@ public class MainController {
     try {
       List<String> listOfUsers = result.get();
 
-      StringBuilder list_str = new StringBuilder("[");
+      StringBuilder listStr = new StringBuilder("[");
       for (int i = 0; i < listOfUsers.size(); i++) {
-        String new_entry = "\"" + listOfUsers.get(i) + "\"";
-        list_str.append(new_entry);
-        if (i != listOfUsers.size() - 1) list_str.append(",");
+        String newEntry = "\"" + listOfUsers.get(i) + "\"";
+        listStr.append(newEntry);
+        if (i != listOfUsers.size() - 1) {
+          listStr.append(",");
+        }
       }
-      list_str.append("]");
+      listStr.append("]");
 
-      return list_str.toString();
+      return listStr.toString();
     } catch (Exception e) {
       System.out.println(e.getMessage());
       return "[]";
