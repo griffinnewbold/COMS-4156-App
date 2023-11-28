@@ -249,7 +249,7 @@ function load_document()
 
 function compare_documents()
 {
-    location.href = "document_comp?user_id=" + user_id;
+    location.href = "";
 }
 
 function load_documents()
