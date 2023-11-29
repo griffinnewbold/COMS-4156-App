@@ -6,6 +6,26 @@ function goback()
     location.href = "document?user_id=" + encodeURIComponent(user_id) + "&doc_id=" + encodeURIComponent(doc_id);
 }
 
+function fetch_diffs()
+{
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState != 4) {
+            return;
+        }
+        if (xhr.status != 200) {
+            alert("Server error: " + xhr.statusText);
+            return;
+        }
+        const data = JSON.parse(JSON.parse(xhr.responseText));
+        $('#comparison-info-text').html(data);
+    };
+    xhr.open("GET", "/doc-diffs?user_id=" + encodeURIComponent(user_id)
+        + "&first_doc_name=" + encodeURIComponent(from_doc['title'])
+        + "&second_doc_name=" + encodeURIComponent(to_doc['title']));
+    xhr.send();
+}
+
 function refresh_docs()
 {
     console.log("Found both documents, generating page contents...");
@@ -17,6 +37,9 @@ function refresh_docs()
     // Update previews
     $('#l-preview-data').html(atob(from_doc['fileString'].substring(1)));
     $('#r-preview-data').html(atob(to_doc['fileString'].substring(1)));
+
+    // Update comparison stats
+    fetch_diffs();
 }
 
 function load_documents()

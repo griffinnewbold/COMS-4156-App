@@ -224,6 +224,24 @@ public class MainController {
   }
 
   /**
+   * Retrieves the differences between the two specified documents.
+   *
+   * @param userId A String representing the user.
+   * @param docOne A String containing the name of the first document.
+   * @param docTwo A String containing the name of the second document.
+   * @return A ResponseEntity detailing the success of the procedure.
+   * @throws JsonProcessingException if a JSON error occurs.
+   */
+  @GetMapping(value = "/doc-diffs", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> retrieveDocumentDiffsAPI(@RequestParam(value = "user_id") String userId,
+                                                    @RequestParam(value = "first_doc_name") String docOne,
+                                                    @RequestParam(value = "second_doc_name") String docTwo)
+          throws JsonProcessingException {
+    ObjectMapper om = new ObjectMapper();
+    return new ResponseEntity<>(om.writeValueAsString(retrieveDocumentDifferences(userId, docOne, docTwo)), HttpStatus.OK);
+  }
+
+  /**
    * Attempts to generate a new network key for a first time user.
    *
    * @param model A Model object used for adding dynamic elements to HTML.

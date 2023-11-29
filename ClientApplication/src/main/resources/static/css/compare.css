@@ -58,3 +58,7 @@
     color: darkred;
     width: 75%;
 }
+
+#comparison-info-text {
+    white-space: pre-wrap;
+}
