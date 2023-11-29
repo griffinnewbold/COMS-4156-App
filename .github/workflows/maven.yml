@@ -10,35 +10,35 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
   pull_request:
-    branches: ["main"]
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-      - name: Build with Maven
-        working-directory: ./ClientApplication
-        run: mvn -B package --file pom.xml >> ../reports/build_log.txt 2>&1
-      - name: Run JUnit tests with Maven
-        working-directory: ./ClientApplication
-        run: mvn test >> ../reports/build_log.txt 2>&1
-      - name: ReportGenerator
-        uses: danielpalme/ReportGenerator-GitHub-Action@5.2.0
-        with:
-          reports: ClientApplication/target/site/jacoco/jacoco.xml
-          reporttypes: HtmlInline;Cobertura;TextSummary
-          sourcedirs: ClientApplication/src/main/java/com/dev/sweproject
-          title: JaCoCo code coverage report
-      - name: JaCoCoSummary
-        run: cat coveragereport/Summary.txt
-
+    - uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      working-directory: ./ClientApplication
+      run: mvn -B package --file pom.xml
+    - name: Run JUnit tests with Maven
+      working-directory: ./ClientApplication
+      run: mvn test
+    - name: ReportGenerator
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.2.0
+      with:
+        # The coverage reports that should be parsed (separated by semicolon). Globbing is supported.
+        reports: ClientApplication/target/site/jacoco/jacoco.xml
+        reporttypes: HtmlInline;Cobertura;TextSummary
+        sourcedirs: ClientApplication/src/main/java/com/dev/sweproject
+        title: JaCoCo code coverage report
+    - name: JaCoCoSummary
+      run: cat coveragereport/Summary.txt
