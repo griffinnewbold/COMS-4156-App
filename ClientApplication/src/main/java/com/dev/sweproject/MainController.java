@@ -92,7 +92,9 @@ public class MainController {
    * @return A String containing the name of the html file to be loaded.
    */
   @GetMapping("/compare")
-  public String compare() { return "compare"; }
+  public String compare() {
+    return "compare";
+  }
 
   /**
    * Redirects to the registration page.

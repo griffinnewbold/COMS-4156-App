@@ -10,10 +10,13 @@ function refresh_docs()
 {
     console.log("Found both documents, generating page contents...");
 
-    // Update doc name, version, and preview
-    // $('#preview-data').html(atob(data['fileString'].substring(1)));
-    // $('title').html('Documents - ' + data['title']);
+    // Update doc names and versions
+    $('#l-preview-title').html(from_doc['title'] + ' (v' + from_doc['previousVersions'].length + ')');
+    $('#r-preview-title').html(to_doc['title'] + ' (v' + to_doc['previousVersions'].length + ')');
 
+    // Update previews
+    $('#l-preview-data').html(atob(from_doc['fileString'].substring(1)));
+    $('#r-preview-data').html(atob(to_doc['fileString'].substring(1)));
 }
 
 function load_documents()

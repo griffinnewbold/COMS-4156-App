@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="ISO-8859-1">
-    <title>Document</title>
+    <title>Document Comparison</title>
     <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <script src="../static/js/jquery-3.3.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -31,7 +31,7 @@
 
     <!-- Top row -->
     <div class="row">
-      <div class="col-md-3" id="back-button-container">
+      <div class="col-md-3 back-button-container">
         <button type="button" id="back-button" onclick="goback()"><- Back</button>
       </div>
       <div class="col-md-6">
@@ -76,10 +76,25 @@
         </div>
         <br>
       </div>
-
-
     </div>
 
+    <!-- comparison info section -->
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <div id="comparison-label">
+          <h3 id="comparison-label-text">Comparison</h3>
+        </div>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-10">
+        <span id="comparison-info-text">Loading comparison information...</span>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
 
   </div>
 </body>
