@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.test.context.junit4.*;
 
+import java.util.List;
 import java.util.concurrent.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -146,4 +147,53 @@ class FirebaseTests {
     }
   }
 
+  /**
+   * Tests for a successful login.
+   */
+  /*
+  @Test
+  @Order(8)
+  public void testConfirmLoginSuccess() {
+    try {
+      CompletableFuture<Boolean> result = firebaseService.confirmLogin("test@email", "aZ2");
+      boolean isConfirmed = result.get();
+      assertTrue(isConfirmed);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+  */
+
+  /**
+   * Tests for unsuccessful login.
+   */
+  @Test
+  @Order(9)
+  public void testConfirmLoginFailure() {
+    try {
+      CompletableFuture<Boolean> result = firebaseService.confirmLogin("test@email", "aZ2s");
+      boolean isConfirmed = result.get();
+      assertFalse(isConfirmed);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  /**
+   * Tests for getSubcollectionNames() method.
+   */
+  /*
+  @Test
+  @Order(10)
+  public void testGetSubCollections() {
+    try {
+      CompletableFuture<List<String>> result = firebaseService.getSubcollectionNames(collectionName);
+      List<String> children = result.get();
+      assertEquals("[test@email, testKey]", children.toString());
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+  //TODO use service to add test@email in testCollection
+  */
 }

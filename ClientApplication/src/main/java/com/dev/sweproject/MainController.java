@@ -420,7 +420,7 @@ public class MainController {
   }
 
   private String retrieveUsernames() {
-    CompletableFuture<List<String>> result = firebaseDataService.getSubcollectionNames();
+    CompletableFuture<List<String>> result = firebaseDataService.getSubcollectionNames(null);
     try {
       List<String> listOfUsers = result.get();
 

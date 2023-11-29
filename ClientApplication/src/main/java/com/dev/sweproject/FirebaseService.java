@@ -98,15 +98,21 @@ public class FirebaseService {
   /**
    * Retrieves the list of users who exist within the network.
    *
+   * @param collectionName A String which can optionally be provided to override the default network.
+   *
    * @return A CompletableFuture that will be completed with the retrieved list or
    *         completes exceptionally with an error message if an error occurs.
    */
-  public CompletableFuture<List<String>> getSubcollectionNames() {
+  public CompletableFuture<List<String>> getSubcollectionNames(String collectionName) {
     CompletableFuture<List<String>> future = new CompletableFuture<>();
 
     DatabaseReference databaseReference = getDatabaseReference();
-    DatabaseReference networkReference = databaseReference.child(NETWORK_ID);
-
+    DatabaseReference networkReference;
+    if (collectionName == null) {
+      networkReference = databaseReference.child(NETWORK_ID);
+    } else {
+      networkReference = databaseReference.child(collectionName);
+    }
     networkReference.addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
@@ -214,33 +220,6 @@ public class FirebaseService {
   }
 
   /**
-   * Delete a collection from the database with the specified name.
-   *
-   * @param collectionName A String representing the name of the collection to be deleted.
-   * @return A CompletableFuture that completes with the collection name upon successful
-   *         deletion or completes exceptionally with an error message.
-   */
-  public CompletableFuture<String> deleteCollection(String collectionName) {
-    DatabaseReference databaseReference = getDatabaseReference();
-    DatabaseReference collectionReference = databaseReference.child(collectionName);
-
-    CompletableFuture<String> resultFuture = new CompletableFuture<>();
-
-    collectionReference.removeValue((error, ref) -> {
-      if (error != null) {
-        String errorMessage = "Error deleting documents in collection: " + error.getMessage();
-        System.out.println(errorMessage);
-        resultFuture.completeExceptionally(new RuntimeException(errorMessage));
-      } else {
-        System.out.println("Collection deleted successfully: " + collectionName);
-        resultFuture.complete(collectionName);
-      }
-    });
-
-    return resultFuture;
-  }
-
-  /**
    * Update an entry in the specified collection with the provided key : value association.
    *
    * @param collectionName A String denoting which collection this entry belongs to.
@@ -266,7 +245,6 @@ public class FirebaseService {
         resultFuture.complete(newValue);
       }
     });
-
     return resultFuture;
   }
 
