@@ -31,7 +31,7 @@ jobs:
         run: mvn -B package --file pom.xml >> ../reports/build_log.txt 2>&1
       - name: Run JUnit tests with Maven
         working-directory: ./ClientApplication
-        run: mvn test >> reports/build_log.txt 2>&1
+        run: mvn test >> ../reports/build_log.txt 2>&1
       - name: Run Checkstyle
         working-directory: ./ClientApplication
         run: mvn checkstyle:checkstyle >> ../reports/build_log.txt 2>&1
