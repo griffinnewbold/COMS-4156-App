@@ -40,7 +40,129 @@ In order to build and use our service you must install the following (This guide
 
 ## End to End Testing
 In order to properly perform end to end tests please follow the list and compare the results of the actions performed 
-to the expected results provided.
+to the expected results provided. 
+
+The following consists of a series of tests you should perform in order to ensure everything is working 
+properly. Please complete the following checklist IN ORDER to ensure the results are as they are meant 
+to be.
+
+0. Please ensure no other applications are running that use up ports on your system. 
+
+1. Run the Service portion of the System
+   - Please view the build guide on the linked repository at the top of the README for instructions on 
+     how to do this, if you believe the service is running on a cloud instance please confirm that prior
+     to skipping the previous details mentioned. 
+
+2. Confirm the proper configuration for SERVICE_IP and NETWORK_ID in ClientApplication/src/main/java/com/dev/sweproject/GlobalInfo.java 
+   - The SERVICE_IP should be whereever the service is being hosted, if local host please use "http://127.0.0.1:PORT" where you should replace port with
+     the port the service is running on, by default it should be 8080.
+   - NETWORK_ID should be a String detailing which network you'd like to be accessing, for purposes of this manual test set please set it to "demoEndtoEndTest"
+
+3. Run the App portion of the System
+   - Please view the build guide above in order to figure out how to run the app
+
+4. Navigate to localhost:8081 within your preferred browser
+   - We configured our application properties to manually run on port 8081 to avoid potential conflicts 
+   - The expected result of this action should be the display of the welcome page, headlined with "Welcome to HealthDocs"
+
+5. Click on "Generate a Network Key"
+   - The expected result of this should be a redirect to localhost:8081/generate-key and the page should be headlined with
+     "Generate Network Key"
+
+5b. Click "Generate Network Key"
+   - The expected result should be the updated page with a new String dynamically placed on top of the button previously clicked. 
+
+6.  Click the "Register" button on the bottom of the page
+   - The expected result should be the redirect to localhost:8081/register and the page should be headlined with "Professional Registration"
+
+   6b Fill out the registration form with the following information:
+      Full Name: your name
+      Email: your email but replace the .domain with ,domain
+      Password: enter a desired password
+      Birthday: enter 01-11-1111
+      Gender: Choose Male or Female
+      Profession: Select any of the presented choices
+      Click register
+         - The expected result is the refresh of the page with a new red text below the form stating "Please fill in all fields properly!"
+   
+   6c Fill out the registration form with the following information:
+      Full Name: your name
+      Email: your email
+      Password: enter a desired password
+      Birthday: enter 01/11/1111
+      Gender: Choose Male or Female
+      Profession: Select any of the presented choices
+      Click register
+         - The expected result is the refresh of the page with a new red text below the form stating "Please fill in all fields properly!"
+   6d Fill out the registration form with the following information:
+      Full Name: your name
+      Email: your email
+      Password: enter a desired password
+      Birthday: enter 01-11-1111
+      Gender: Choose Male or Female
+      Profession: Select any of the presented choices
+      Click register
+         - The expected result is the redirect to the login page which is headlined with "Login"
+   
+   7a Fill out the login information with invalid credentials and click login
+         - The expected result is the refresh of the page with a new red text below the form stating "Invalid credentials"
+   7b Fill out the login information with the proper credentials of the user you registered in 6d
+         - The expected result is the redirect to the dashboard page headlined with "Welcome username!"
+   
+   8 On your computer create a new txt file named whatever and provide it with the following sentence "This is my first upload! Test!"
+   
+   9 Click the Choose File button and select the file you created in 8 and after confirming the selection provide the document with the title "First Upload" 
+     then click the Upload button
+         - The expected result is the refresh of the current page which should now be populated with a single entry. 
+   
+   10 Click on the dashboard entry that has just appeared. Confirm that the preview matches the contents of what your document contained. View the
+      document statistics below the preview window, confirm that all the details are correct, the creator should be your username, the word count 
+      should match your document contents. 1 user should be able to see the document and there should be 0 previous versions on record. 
+   
+   11 Locate the Delete Document Button and Click it
+         - The expected result is the redirect back to the dashboard as described in the result from 7b
+   
+   12 Click the Upload button
+         - The expected result is a popup stating "You must select a document to upload."
+   
+   13 Click the logout button
+         - The expected result is a redirect back to the homepage described in 4
+   
+   14 Click the login button and fill out the form with the following credentials:
+      Email: testdummy@dummy.org
+      password: testexercise
+         - The expected result is a redirect to the dashboard described in 7b but this time the dashboard is prepopulated with 8 entries
+   
+   15 Using the search bar type in "Eighth"
+         - The expected result is the dashboard page with a single entry titled "Eighth" on the screen. 
+   
+   16 Click on the displayed entry
+         - The expected result is the redirect to the document page with the same kind of display as described in 10
+   
+   17 Click on the Choose Provider Dropdown and select any option that is present that is eligible to be selected and then click the share button to its immediate right
+        - The expected result is the refresh of the page with a new user mentioned in the document statistics section.
+
+18. Click on any of the following: share, compare, upload, download version
+    - The expected result from any of these is a server popup stating you must perform another action prior to proceeding.
+
+19. Click the big download button on the top below the Manage subheader
+    - The expected result should be the document being downloaded to executing computer
+
+20a Open up the document in a text editor and add some content, save the document then close the editor
+20b Click choose file and select the editted version and click upload. 
+    - The expected result should be the refresh of the page with the new document contents in the preview window and updated document stats
+
+21 Click the previous version drop down and select the option presented and then click Download Version button to its immediate right
+   - The expected result should be the document titled Eighth_v1.txt being downloaded to the executing computer
+
+22 Select the Compare Documents dropdown and select Third and then click the Compare button to its immediate right
+   - The expected result should be the redirect to a page headlined Compare with the initial documents on the left, the selected documents contents on the right and a summary
+     of the stats and differences in the center of the page. 
+
+23 Click the Back button and then the My Documents button in the Upper left and then click logout
+   - The expected result is the return to the homepage
+
+End of Testing
 
 ## Tools used 🧰
 This section includes notes on tools and technologies used in building this project, as well as any additional details if applicable.
