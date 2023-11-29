@@ -65,13 +65,12 @@ function refresh_doc()
     $('#doc-name-label-text').html(data['title'] + ' (version ' + data['previousVersions'].length + ')');
     $('#preview-data').html(atob(data['fileString'].substring(1)));
     $('title').html('Documents - ' + data['title']);
-    console.log(atob(data['fileString'].substring(1))); //
 
     // Update providers
     load_providers();
 
     // Update document options
-    load_documents();
+    load_documents_for_comparison();
 
     // Update version picker
     let vers_html = '';
@@ -249,10 +248,19 @@ function load_document()
 
 function compare_documents()
 {
-    location.href = "";
+    let compare_val = $('#compare-select').val();
+    if (compare_val === null) {
+        alert("You must pick another document to compare against.");
+        return;
+    }
+    console.log("Comparing with: " + compare_val);
+
+    location.href = ("compare?user_id=" + encodeURIComponent(user_id)
+                     + "&from_doc_id=" + encodeURIComponent(doc_id)
+                     + "&to_doc_name=" + encodeURIComponent(compare_val));
 }
 
-function load_documents()
+function load_documents_for_comparison()
 {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
@@ -265,14 +273,14 @@ function load_documents()
         }
         const titles = JSON.parse(JSON.parse(xhr.responseText));
 
-        let doc_html = '<option selected disabled>Choose Document</option>';
+        let doc_html = '<option selected disabled>Choose document</option>';
         let title = data['title'];
 
         for (let i = 0; i < titles.length; i++) {
             let newTitle = titles[i];
             let disabled_str = (title === newTitle ? 'disabled' : '');
             doc_html += '<option ' + disabled_str + ' value="' + newTitle + '">' + newTitle
-                + '</option>'
+                + '</option>';
         }
 
         $('#compare-select').html(doc_html);

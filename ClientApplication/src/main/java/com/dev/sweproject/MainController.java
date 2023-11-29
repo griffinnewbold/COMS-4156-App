@@ -41,6 +41,9 @@ public class MainController {
   @GetMapping("/document")
   public String document() { return "document"; }
 
+  @GetMapping("/compare")
+  public String compare() { return "compare"; }
+
   @GetMapping("/register")
   public String showForm(Model model) {
     User user = new User();
