@@ -83,7 +83,7 @@ public class GlobalInfo {
    * A String representing the specific client using the app.
    * IF YOU ARE TESTING FOR CONCURRENCY PLEASE ALTER THIS BEFORE RUNNING A NEW INSTANCE.
    */
-  public static final String NETWORK_ID = "QCO1700369101620";
+  public static final String NETWORK_ID = "demoEndtoEndTest";
 
   /**
    * Assigns the global variable for the database.

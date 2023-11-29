@@ -138,7 +138,8 @@ public class User {
    * @return True if user is considered valid otherwise false.
    */
   public static boolean isValidUser(User user) {
-    return !user.getEmail().isEmpty()
+    return nonNullAttributes(user)
+        && !user.getEmail().isEmpty()
         && !user.getName().isEmpty()
         && !user.getProfession().isEmpty()
         && !user.getBirthday().isEmpty()
@@ -148,5 +149,14 @@ public class User {
         && user.getBirthday().length() == 10
         && user.getBirthday().contains("-")
         && user.getBirthday().substring(user.getBirthday().indexOf("-") + 1).contains("-");
+  }
+
+  private static boolean nonNullAttributes(User user) {
+    return user.birthday != null
+        && user.email != null
+        && user.name != null
+        && user.password != null
+        && user.profession != null
+        && user.gender != null;
   }
 }
