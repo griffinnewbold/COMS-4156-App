@@ -444,9 +444,7 @@ public class MainController {
   private String retrieveDocNames(String userId) {
     String fullUrl = SERVICE_IP + DOC_NAME_URI + "?network-id=" + NETWORK_ID
         + "&user-id=" + userId;
-    String res = sendHttpRequest(fullUrl);
-    System.out.println(res);
-    return res;
+    return sendHttpRequest(fullUrl);
   }
 
   private String patchShareRequest(String userId, String documentTitle, String newUserId) {

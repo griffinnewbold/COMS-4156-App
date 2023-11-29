@@ -6,22 +6,27 @@
     <style>
         body {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 5vh; /* Use viewport height for responsive margin */
         }
 
-        h1 {
-            color: #333;
+        .welcome-heading {
+            font-size: 4vw; /* Responsive font size */
+        }
+
+        .login-register-heading {
+            font-size: 1.5vw; /* Reduced font size */
         }
 
         #options {
-            margin-top: 30px;
+            margin-top: 3vh;
         }
 
         #login, #register, #generateKey {
             display: block;
-            margin: 10px auto;
-            width: 150px; /* Adjusted width for the new button */
-            padding: 10px 15px;
+            margin: 1vw auto;
+            width: 40vw; /* Responsive width */
+            max-width: 150px; /* Maximum width */
+            padding: 2vh 1vw;
             text-decoration: none;
             color: #fff;
             background-color: #007bff;
@@ -29,29 +34,54 @@
             border-radius: 5px;
         }
 
-        #bottom {
-            position: fixed;
-            width:100%;
-            bottom:100px;
-        }
-
         #top {
             position: fixed;
-            width:100%;
-            top:100px;
+            width: 100%;
+            padding: 2vh 0;
+            top: 10vh;
+        }
+
+        #bottom {
+            position: absolute;
+            width: 100%;
+            padding: 2vh 0;
+            bottom: 0;
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 600px) {
+            .welcome-heading, .login-register-heading {
+                font-size: 5vw;
+            }
+
+            #login, #register, #generateKey {
+                width: 50vw;
+                padding: 3vh 2vw;
+            }
+
+            #bottom {
+                padding: 3vh 0;
+            }
         }
     </style>
 </head>
 <body>
-<div id="top">
-    <h1>Welcome! Login or Register Below!</h1>
+<div class="container">
+    <div class="row" style="margin-top: 120px">
+        <div style="text-align: center">
+            <h1 class="welcome-heading">Welcome to HealthDocs</h1>
+            <div class="row" style="margin-top: 40px">
+                <h2 class="login-register-heading">Login or Register Below</h2>
+            </div>
+        </div>
+    </div>
     <div id="options">
         <a href="/login" id="login">Login</a>
         <a href="/register" id="register">Register</a>
     </div>
+    <br>
 </div>
 
-<!-- Additional header and button at the bottom of the page -->
 <div id="bottom">
     <h2>Is your organization new to the app?</h2>
     <a href="/generate-key" id="generateKey">Generate a Network Key</a>
