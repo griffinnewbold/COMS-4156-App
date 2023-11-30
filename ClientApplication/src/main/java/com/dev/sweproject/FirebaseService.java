@@ -64,18 +64,26 @@ public class FirebaseService {
    * @return A CompletableFuture that will be completed with the true or false or
    *         completes exceptionally with an error message if an error occurs.
    */
-  public CompletableFuture<Boolean> confirmLogin(String email, String password) {
+  public CompletableFuture<Boolean> confirmLogin(String email, String password,
+                                                 String collectionName) {
     CompletableFuture<Boolean> future = new CompletableFuture<>();
 
     DatabaseReference databaseReference = getDatabaseReference();
-    DatabaseReference userReference = databaseReference.child(NETWORK_ID).child(email);
+    DatabaseReference userReference;
+
+    if (collectionName == null) {
+      userReference = databaseReference.child(NETWORK_ID).child(email);
+    } else {
+      userReference = databaseReference.child(collectionName).child(email);
+    }
+
 
     userReference.addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
         if (dataSnapshot.exists()) {
           String storedPassword = dataSnapshot.child("password").getValue(String.class);
-
+          System.out.println(storedPassword);
           if (storedPassword != null && storedPassword.equals(password)) {
             future.complete(true);
           } else {
@@ -98,7 +106,8 @@ public class FirebaseService {
   /**
    * Retrieves the list of users who exist within the network.
    *
-   * @param collectionName A String which can optionally be provided to override the default network.
+   * @param collectionName A String which can optionally be provided to override the
+   *                       default network.
    *
    * @return A CompletableFuture that will be completed with the retrieved list or
    *         completes exceptionally with an error message if an error occurs.

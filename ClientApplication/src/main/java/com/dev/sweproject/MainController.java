@@ -233,12 +233,15 @@ public class MainController {
    * @throws JsonProcessingException if a JSON error occurs.
    */
   @GetMapping(value = "/doc-diffs", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> retrieveDocumentDiffsAPI(@RequestParam(value = "user_id") String userId,
-                                                    @RequestParam(value = "first_doc_name") String docOne,
-                                                    @RequestParam(value = "second_doc_name") String docTwo)
-          throws JsonProcessingException {
+  public ResponseEntity<?> retrieveDocumentDiffsApi(@RequestParam(value = "user_id") String userId,
+                                                    @RequestParam(value = "first_doc_name")
+                                                    String docOne,
+                                                    @RequestParam(value = "second_doc_name")
+                                                    String docTwo)
+                                                    throws JsonProcessingException {
     ObjectMapper om = new ObjectMapper();
-    return new ResponseEntity<>(om.writeValueAsString(retrieveDocumentDifferences(userId, docOne, docTwo)), HttpStatus.OK);
+    return new ResponseEntity<>(om.writeValueAsString(retrieveDocumentDifferences(userId, docOne,
+        docTwo)), HttpStatus.OK);
   }
 
   /**
@@ -299,8 +302,7 @@ public class MainController {
   public String attemptLogin(String email, String password, Model model) {
     try {
       CompletableFuture<Boolean> result = firebaseDataService.confirmLogin(email.substring(
-          0, email.indexOf('.')), password
-      );
+          0, email.indexOf('.')), password, null);
       boolean isSuccessful = result.get();
 
       if (isSuccessful) {
