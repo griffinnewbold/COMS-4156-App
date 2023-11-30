@@ -131,4 +131,162 @@ class UserTests {
   public void isValidTestFailure() {
     assertFalse(User.isValidUser(new User()));
   }
+
+  @Test
+  void testIsValidUserAllValidAttributes() {
+    User validUser = new User();
+    validUser.setName("John Doe");
+    validUser.setEmail("john.doe@example.com");
+    validUser.setProfession("Engineer");
+    validUser.setBirthday("2000-01-01");
+    validUser.setGender("Male");
+    validUser.setPassword("SecurePassword");
+    boolean isValid = User.isValidUser(validUser);
+    assertTrue(isValid);
+  }
+
+  @Test
+  void testIsValidUserNullAttributes() {
+    User invalidUser = new User();
+    boolean isValid = User.isValidUser(invalidUser);
+    assertFalse(isValid);
+  }
+
+  @Test
+  void testIsValidUserEmptyAttributes() {
+    User invalidUser = new User();
+    invalidUser.setName("");
+    invalidUser.setEmail("");
+    invalidUser.setProfession("");
+    invalidUser.setBirthday("");
+    invalidUser.setGender("");
+    invalidUser.setPassword("");
+    boolean isValid = User.isValidUser(invalidUser);
+    assertFalse(isValid);
+  }
+
+  @Test
+  void testIsValidUserInvalidEmail() {
+    User invalidUser = new User();
+    invalidUser.setEmail("invalid-email");
+    boolean isValid = User.isValidUser(invalidUser);
+    assertFalse(isValid);
+  }
+
+  @Test
+  void testIsValidUserInvalidBirthday() {
+    User invalidUser = new User();
+    invalidUser.setBirthday("01-01-2000");
+    boolean isValid = User.isValidUser(invalidUser);
+    assertFalse(isValid);
+  }
+
+  @Test
+  void testIsValidUserInvalidGender() {
+    User invalidUser = new User();
+    invalidUser.setGender("Invalid");
+    boolean isValid = User.isValidUser(invalidUser);
+    assertFalse(isValid);
+  }
+
+  @Test
+  void testIsValidUserInvalidPassword() {
+    User invalidUser = new User();
+    invalidUser.setPassword("");
+    boolean isValid = User.isValidUser(invalidUser);
+    assertFalse(isValid);
+  }
+
+  @Test
+  void testIsValidUserInvalidEmailFormat() {
+    User invalidUser = new User();
+    invalidUser.setEmail("invalid-email-format");
+    boolean isValid = User.isValidUser(invalidUser);
+    assertFalse(isValid);
+  }
+
+  @Test
+  void testIsValidUserInvalidBirthdayLength() {
+    User invalidUser = new User();
+    invalidUser.setBirthday("2000-01");
+    boolean isValid = User.isValidUser(invalidUser);
+    assertFalse(isValid);
+  }
+
+  @Test
+  void testIsValidUserInvalidBirthdayFormat() {
+    User invalidUser = new User();
+    invalidUser.setBirthday("01/01/2000");
+    boolean isValid = User.isValidUser(invalidUser);
+    assertFalse(isValid);
+  }
+
+  @Test
+  void testIsValidUserInvalidBirthdayComponents() {
+    User invalidUser = new User();
+    invalidUser.setEmail("s");
+    invalidUser.setName("d");
+    invalidUser.setProfession("d");
+    invalidUser.setBirthday("d");
+    invalidUser.setGender("m");
+    invalidUser.setPassword("2");
+    invalidUser.setBirthday("2000-01-01-01");
+    boolean isValid = User.isValidUser(invalidUser);
+    assertFalse(isValid);
+  }
+
+  @Test
+  void testIsValidUserInValidName() {
+    User validUser = new User();
+    validUser.setEmail("s");
+    validUser.setName("");
+    boolean isValid = User.isValidUser(validUser);
+    assertFalse(isValid);
+  }
+
+  @Test
+  void testIsValidUserInValidProfession() {
+    User validUser = new User();
+    validUser.setEmail("s");
+    validUser.setName("d");
+    validUser.setProfession("");
+    boolean isValid = User.isValidUser(validUser);
+    assertFalse(isValid);
+  }
+
+  @Test
+  void testIsValidUserInValidBirthday() {
+    User validUser = new User();
+    validUser.setEmail("s");
+    validUser.setName("d");
+    validUser.setProfession("d");
+    validUser.setBirthday("");
+    boolean isValid = User.isValidUser(validUser);
+    assertFalse(isValid);
+  }
+
+  @Test
+  void testIsValidUserInValidGender() {
+    User validUser = new User();
+    validUser.setEmail("s");
+    validUser.setName("d");
+    validUser.setProfession("d");
+    validUser.setBirthday("d");
+    validUser.setGender("");
+    boolean isValid = User.isValidUser(validUser);
+    assertFalse(isValid);
+  }
+
+  @Test
+  void testIsValidUserInValidPassword() {
+    User validUser = new User();
+    validUser.setEmail("s");
+    validUser.setName("d");
+    validUser.setProfession("d");
+    validUser.setBirthday("d");
+    validUser.setGender("m");
+    validUser.setPassword("");
+    boolean isValid = User.isValidUser(validUser);
+    assertFalse(isValid);
+  }
 }

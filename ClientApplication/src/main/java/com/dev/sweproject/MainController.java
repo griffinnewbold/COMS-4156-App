@@ -1,6 +1,6 @@
 package com.dev.sweproject;
 
-//Stylechecker wanted this, otherwise we'd clearly do .*
+//Style checker wanted this, otherwise we'd clearly do .*
 import static com.dev.sweproject.GlobalInfo.DELETE_URI;
 import static com.dev.sweproject.GlobalInfo.DIFFERENCE_URI;
 import static com.dev.sweproject.GlobalInfo.DOC_NAME_URI;
@@ -8,7 +8,6 @@ import static com.dev.sweproject.GlobalInfo.DOWNLOAD_URI;
 import static com.dev.sweproject.GlobalInfo.NETWORK_ID;
 import static com.dev.sweproject.GlobalInfo.REGISTRATION_URI;
 import static com.dev.sweproject.GlobalInfo.RETRIEVE_URI;
-import static com.dev.sweproject.GlobalInfo.REVISION_URI;
 import static com.dev.sweproject.GlobalInfo.SEARCH_URI;
 import static com.dev.sweproject.GlobalInfo.SERVICE_IP;
 import static com.dev.sweproject.GlobalInfo.SHARE_URI;
@@ -47,7 +46,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
-
 
 /**
  * MainController is responsible for all routing logic as well as making
@@ -104,11 +102,12 @@ public class MainController {
   @GetMapping("/register")
   public String showForm(Model model) {
     User user = new User();
-    model.addAttribute("user", user);
+    List<String> listProfession = Arrays.asList("Doctor", "Nurse Practitioner", "Specialist");
 
-    List<String> listProfession = Arrays.asList("Doctor", "Nurse Practictioner", "Specialist");
-    model.addAttribute("listProfession", listProfession);
-
+    if (model != null) {
+      model.addAttribute("user", user);
+      model.addAttribute("listProfession", listProfession);
+    }
     return "register_form";
   }
 
@@ -281,11 +280,13 @@ public class MainController {
     }
 
     User blankUser = new User();
-    model.addAttribute("user", blankUser);
-
     List<String> listProfession = Arrays.asList("Doctor", "Nurse Practitioner", "Specialist");
-    model.addAttribute("listProfession", listProfession);
-    model.addAttribute("error", "Please fill in all fields properly!");
+
+    if (model != null) {
+      model.addAttribute("user", blankUser);
+      model.addAttribute("listProfession", listProfession);
+      model.addAttribute("error", "Please fill in all fields properly!");
+    }
     return "register_form";
   }
 
@@ -373,7 +374,13 @@ public class MainController {
         HttpStatus.OK);
   }
 
-  private String registerUser(User user) {
+  /**
+   * Registers the user to the client database.
+   *
+   * @param user A User object representing the user.
+   * @return A String denoting which html page to load.
+   */
+  public String registerUser(User user) {
     try {
       CompletableFuture<Object> result = firebaseDataService.addEntry(NETWORK_ID,
           user.getEmail().substring(0, user.getEmail().indexOf('.')), user);
@@ -385,43 +392,72 @@ public class MainController {
     }
   }
 
-  private String retrieveDocuments(String userId) {
+  /**
+   * Helper method for retrieveDocumentsApi.
+   *
+   * @param userId A String representing the user.
+   * @return A String containing the HTTP response.
+   */
+  public String retrieveDocuments(String userId) {
     String fullUrl = SERVICE_IP + RETRIEVE_URI + "?network-id=" + NETWORK_ID + "&user-id=" + userId;
     return sendHttpRequest(fullUrl);
   }
 
-  private String retrieveDocumentStats(String userId, String documentTitle) {
+  /**
+   * Helper method for retrieveDocumentsStatsApi.
+   *
+   * @param userId A String representing the user.
+   * @return A String containing the HTTP response.
+   */
+  public String retrieveDocumentStats(String userId, String documentTitle) {
     String fullUrl = SERVICE_IP + STATS_URI + "?network-id=" + NETWORK_ID + "&document-name="
         + documentTitle + "&your-user-id=" + userId;
     return sendHttpRequest(fullUrl);
   }
 
-  private String retrievePreviousVersion(String userId, String documentTitle, int revisionNumber) {
-    String fullUrl = SERVICE_IP + REVISION_URI + "?network-id=" + NETWORK_ID + "&document-name="
-        + documentTitle + "&your-user-id=" + userId + "&revision-number=" + revisionNumber;
-    return sendHttpRequest(fullUrl);
-  }
-
-  private String retrieveDocumentContents(String userId, String documentTitle) {
+  /**
+   * Helper method for retrieveDocumentContentsApi.
+   *
+   * @param userId A String representing the user.
+   * @return A String containing the HTTP response.
+   */
+  public String retrieveDocumentContents(String userId, String documentTitle) {
     String fullUrl = SERVICE_IP + DOWNLOAD_URI + "?network-id=" + NETWORK_ID + "&document-name="
         + documentTitle + "&your-user-id=" + userId;
     return sendHttpRequest(fullUrl);
   }
 
-  private String retrieveDocumentDifferences(String userId, String fstDocumentTitle,
+  /**
+   * Helper method for retrieveDocumentDifferenceApi.
+   *
+   * @param userId A String representing the user.
+   * @return A String containing the HTTP response.
+   */
+  public String retrieveDocumentDifferences(String userId, String fstDocumentTitle,
                                             String sndDocumentTitle) {
     String fullUrl = SERVICE_IP + DIFFERENCE_URI + "?network-id=" + NETWORK_ID + "&fst-doc-name="
         + fstDocumentTitle + "&snd-doc-name=" + sndDocumentTitle + "&your-user-id=" + userId;
     return sendHttpRequest(fullUrl);
   }
 
-  private String retrieveDocumentExistence(String userId, String documentTitle) {
+  /**
+   * Helper method for retrieveDocumentsApi.
+   *
+   * @param userId A String representing the user.
+   * @return A String containing the HTTP response.
+   */
+  public String retrieveDocumentExistence(String userId, String documentTitle) {
     String fullUrl = SERVICE_IP + SEARCH_URI + "?network-id=" + NETWORK_ID + "&document-name="
         + documentTitle + "&your-user-id=" + userId;
     return sendHttpRequest(fullUrl);
   }
 
-  private String retrieveUsernames() {
+  /**
+   * Helper method for retrieveUsernamesApi.
+   *
+   * @return A String containing the HTTP response.
+   */
+  public String retrieveUsernames() {
     CompletableFuture<List<String>> result = firebaseDataService.getSubcollectionNames(null);
     try {
       List<String> listOfUsers = result.get();
@@ -443,13 +479,27 @@ public class MainController {
     }
   }
 
-  private String retrieveDocNames(String userId) {
+  /**
+   * Helper method for retrieveDocumentNamesApi.
+   *
+   * @param userId A String representing the user.
+   * @return A String containing the HTTP response.
+   */
+  public String retrieveDocNames(String userId) {
     String fullUrl = SERVICE_IP + DOC_NAME_URI + "?network-id=" + NETWORK_ID
         + "&user-id=" + userId;
     return sendHttpRequest(fullUrl);
   }
 
-  private String patchShareRequest(String userId, String documentTitle, String newUserId) {
+  /**
+   * Helper method for shareRequestApi.
+   *
+   * @param userId A String representing the user.
+   * @param documentTitle A String representing the title.
+   * @param newUserId A String representing the new user to add.
+   * @return A String containing the HTTP response.
+   */
+  public String patchShareRequest(String userId, String documentTitle, String newUserId) {
     documentTitle = convertDocumentTitle(documentTitle);
     String fullUrl = SERVICE_IP + SHARE_URI + "?network-id=" + NETWORK_ID + "&document-name="
         + documentTitle + "&your-user-id=" + userId + "&their-user-id=" + newUserId;
@@ -476,7 +526,14 @@ public class MainController {
     }
   }
 
-  private String deleteRequest(String userId, String documentTitle) {
+  /**
+   * Helper method for deleteRequestApi.
+   *
+   * @param userId A String representing the user.
+   * @param documentTitle A String representing the title.
+   * @return A String containing the HTTP response.
+   */
+  public String deleteRequest(String userId, String documentTitle) {
     documentTitle = convertDocumentTitle(documentTitle);
     String fullUrl = SERVICE_IP + DELETE_URI + "?network-id=" + NETWORK_ID + "&document-name="
         + documentTitle + "&your-user-id=" + userId;
@@ -500,7 +557,15 @@ public class MainController {
     }
   }
 
-  private String postUploadRequest(String userId, String documentTitle, String contents) {
+  /**
+   * A helper method for postUploadRequestApi.
+   *
+   * @param userId A String representing the user.
+   * @param documentTitle A String representing the title.
+   * @param contents A String containing the file contents.
+   * @return A String containing the HTTP response.
+   */
+  public String postUploadRequest(String userId, String documentTitle, String contents) {
     String fullUrl = SERVICE_IP + UPLOAD_URI + "?network-id=" + NETWORK_ID + "&document-name="
         + documentTitle + "&user-id=" + userId;
     try {
@@ -535,7 +600,12 @@ public class MainController {
     }
   }
 
-  private String postServiceRegistrationRequest() {
+  /**
+   * Helper method for generateKey method.
+   *
+   * @return A String containing the HTTP response.
+   */
+  public String postServiceRegistrationRequest() {
     String fullUrl = SERVICE_IP + REGISTRATION_URI;
     try {
       HttpClient httpClient = HttpClients.createDefault();
@@ -558,7 +628,13 @@ public class MainController {
     }
   }
 
-  private String sendHttpRequest(String url) {
+  /**
+   * Sends GET requests.
+   *
+   * @param url A String representing the URL to send the request to.
+   * @return A String containing the HTTP response.
+   */
+  public String sendHttpRequest(String url) {
     try {
       ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
@@ -575,7 +651,13 @@ public class MainController {
     }
   }
 
-  private String convertDocumentTitle(String title) {
+  /**
+   * Converts whitespace to HTTP acceptable whitespace.
+   *
+   * @param title A String representing the title to convert.
+   * @return A String containing the HTTP response.
+   */
+  public String convertDocumentTitle(String title) {
     StringBuilder result = new StringBuilder();
     for (int i = 0; i < title.length(); i++) {
       if (title.charAt(i) != ' ') {
