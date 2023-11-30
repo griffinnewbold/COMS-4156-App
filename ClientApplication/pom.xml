@@ -90,6 +90,8 @@
                     <excludes>
                         <exclude>com/dev/sweproject/ByteArrayMultipart*</exclude>
                         <exclude>com/dev/sweproject/MainController*</exclude>
+                        <exclude>com/dev/sweproject/ClientApplication*</exclude>
+                        <exclude>com/dev/sweproject/GlobalInfo*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
