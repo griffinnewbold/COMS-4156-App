@@ -5,7 +5,9 @@ This is the GitHub repository for the **app portion** of the Team Project associ
 Please use the following link to view the repository relevant to the service: https://github.com/griffinnewbold/COMS-4156-Service
 
 ## About our App
-Our app targets **healthcare workers**, it is an app that allows for the management of documents in a variety of different ways. 
+Our app targets **healthcare workers**, it is an app that allows for the management of documents in a variety of different ways. With a free and convenient way to manage documents, it is easier than ever for healthcare professionals to share comments on patient
+diagnoses, prescriptions, and more.
+
 All of that and how our app specifically works with our service is described in more detail below.
 ### App Functionality
 1. Registering your Organization with our Service: Our app provides functionality for first time organizations to generate what we call a networkId which you would then paste it into the <code>NETWORK_ID</code> constant within the <code>GlobalInfo.java</code> file.
@@ -164,6 +166,22 @@ to be.
 
 End of Testing
 
+## Backend Checkstyle Report
+![Screenshot of a checkstyle report for our project, showing 0 warnings and errors](reports/checkstyle-report1-november29.png)
+![Screenshot of another checkstyle report for our project, showing 0 warnings and errors](reports/checkstyle-report2-november29.png)
+
+## Continuous Integration Report
+This repository using GitHub Actions to perform continous integration, to view the latest results go to the following link: https://github.com/griffinnewbold/COMS-4156-App/actions/workflows/maven.yml
+
+Click on the latest job on the top under "X workflow runs" then Click 'build' under jobs finally click the drop down next to all the action items to read the logs made during their execution
+
+For convenience a recent CI Report has been manually created and is available for view in the reports directory under the appropriately named file.
+
+## A Final Note to Developers
+This repository should serve as a sample of how one can use the software service located in the reposistory mentioned in the appropriately named section towards the top of this document there is many different ways to 
+use the service to make different kinds of web apps for a multitude of different target demographics, please view the section titled "An Initial Note to Developers" in the other repository if you haven't done so already
+for more details on how to develop your own app which makes use of our service. 
+
 ## Tools used 🧰
 This section includes notes on tools and technologies used in building this project, as well as any additional details if applicable.
 
@@ -177,9 +195,6 @@ This section includes notes on tools and technologies used in building this proj
 * JUnit
   * JUnit tests get run automatically as part of the CI pipeline.
 
-## Backend Checkstyle Report
-
-## Continuous Integration Report
-
-## A Final Note to Developers
-
+## Third Party API Documentation
+We made extensive use of Firebase Realtime Database provided by Google for both the service portion and the app portion of the project, here is a link to the full 
+documentation provided by Google on how to use the different components provided and gives insight into how we managed the development of this project while making use of it: https://firebase.google.com/docs/database/
