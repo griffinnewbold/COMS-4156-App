@@ -2,15 +2,15 @@ package com.dev.sweproject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 /**
  * A JUnit Test Suite that tests all major methods within User.java.
@@ -129,6 +129,6 @@ class UserTests {
   @Test
   @Order(11)
   public void isValidTestFailure() {
-     assertFalse(User.isValidUser(new User()));
+    assertFalse(User.isValidUser(new User()));
   }
 }
