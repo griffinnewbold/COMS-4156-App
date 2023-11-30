@@ -1,0 +1,540 @@
+Set Up Job
+----------
+Current runner version: '2.311.0'
+Operating System
+  Ubuntu
+  22.04.3
+  LTS
+Runner Image
+  Image: ubuntu-22.04
+  Version: 20231126.1.0
+  Included Software: https://github.com/actions/runner-images/blob/ubuntu22/20231126.1/images/ubuntu/Ubuntu2204-Readme.md
+  Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu22%2F20231126.1
+Runner Image Provisioner
+  2.0.321.1
+GITHUB_TOKEN Permissions
+  Contents: read
+  Metadata: read
+  Packages: read
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@v3' (SHA:f43a0e5ff2bd294095638e18286ca9a3d1956744)
+Download action repository 'actions/setup-java@v3' (SHA:0ab4596768b603586c0de567f2430c30f5b0d2b0)
+Download action repository 'danielpalme/ReportGenerator-GitHub-Action@5.2.0' (SHA:4d510cbed8a05af5aefea46c7fd6e05b95844c89)
+Complete job name: build
+
+Run actions/checkout@v3
+-----------------------
+Run actions/checkout@v3
+  with:
+    repository: griffinnewbold/COMS-4156-App
+    token: ***
+    ssh-strict: true
+    persist-credentials: true
+    clean: true
+    sparse-checkout-cone-mode: true
+    fetch-depth: 1
+    fetch-tags: false
+    lfs: false
+    submodules: false
+    set-safe-directory: true
+Syncing repository: griffinnewbold/COMS-4156-App
+Getting Git version info
+  Working directory is '/home/runner/work/COMS-4156-App/COMS-4156-App'
+  /usr/bin/git version
+  git version 2.43.0
+Temporarily overriding HOME='/home/runner/work/_temp/1b7ce6cf-23c8-4e71-81c5-ccf2801096c7' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+/usr/bin/git config --global --add safe.directory /home/runner/work/COMS-4156-App/COMS-4156-App
+Deleting the contents of '/home/runner/work/COMS-4156-App/COMS-4156-App'
+Initializing the repository
+  /usr/bin/git init /home/runner/work/COMS-4156-App/COMS-4156-App
+  hint: Using 'master' as the name for the initial branch. This default branch name
+  hint: is subject to change. To configure the initial branch name to use in all
+  hint: of your new repositories, which will suppress this warning, call:
+  hint: 
+  hint: 	git config --global init.defaultBranch <name>
+  hint: 
+  hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+  hint: 'development'. The just-created branch can be renamed via this command:
+  hint: 
+  hint: 	git branch -m <name>
+  Initialized empty Git repository in /home/runner/work/COMS-4156-App/COMS-4156-App/.git/
+  /usr/bin/git remote add origin https://github.com/griffinnewbold/COMS-4156-App
+Disabling automatic garbage collection
+  /usr/bin/git config --local gc.auto 0
+Setting up auth
+  /usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+  /usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+  /usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+  /usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+  /usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Fetching the repository
+  /usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin +d4e13ef82a1af5cfcd94b0b0c08d5ef302a1e2fb:refs/remotes/origin/main
+  remote: Enumerating objects: 70, done.        
+  remote: Counting objects:   1% (1/70)        
+  remote: Counting objects:   2% (2/70)        
+  remote: Counting objects:   4% (3/70)        
+  remote: Counting objects:   5% (4/70)        
+  remote: Counting objects:   7% (5/70)        
+  remote: Counting objects:   8% (6/70)        
+  remote: Counting objects:  10% (7/70)        
+  remote: Counting objects:  11% (8/70)        
+  remote: Counting objects:  12% (9/70)        
+  remote: Counting objects:  14% (10/70)        
+  remote: Counting objects:  15% (11/70)        
+  remote: Counting objects:  17% (12/70)        
+  remote: Counting objects:  18% (13/70)        
+  remote: Counting objects:  20% (14/70)        
+  remote: Counting objects:  21% (15/70)        
+  remote: Counting objects:  22% (16/70)        
+  remote: Counting objects:  24% (17/70)        
+  remote: Counting objects:  25% (18/70)        
+  remote: Counting objects:  27% (19/70)        
+  remote: Counting objects:  28% (20/70)        
+  remote: Counting objects:  30% (21/70)        
+  remote: Counting objects:  31% (22/70)        
+  remote: Counting objects:  32% (23/70)        
+  remote: Counting objects:  34% (24/70)        
+  remote: Counting objects:  35% (25/70)        
+  remote: Counting objects:  37% (26/70)        
+  remote: Counting objects:  38% (27/70)        
+  remote: Counting objects:  40% (28/70)        
+  remote: Counting objects:  41% (29/70)        
+  remote: Counting objects:  42% (30/70)        
+  remote: Counting objects:  44% (31/70)        
+  remote: Counting objects:  45% (32/70)        
+  remote: Counting objects:  47% (33/70)        
+  remote: Counting objects:  48% (34/70)        
+  remote: Counting objects:  50% (35/70)        
+  remote: Counting objects:  51% (36/70)        
+  remote: Counting objects:  52% (37/70)        
+  remote: Counting objects:  54% (38/70)        
+  remote: Counting objects:  55% (39/70)        
+  remote: Counting objects:  57% (40/70)        
+  remote: Counting objects:  58% (41/70)        
+  remote: Counting objects:  60% (42/70)        
+  remote: Counting objects:  61% (43/70)        
+  remote: Counting objects:  62% (44/70)        
+  remote: Counting objects:  64% (45/70)        
+  remote: Counting objects:  65% (46/70)        
+  remote: Counting objects:  67% (47/70)        
+  remote: Counting objects:  68% (48/70)        
+  remote: Counting objects:  70% (49/70)        
+  remote: Counting objects:  71% (50/70)        
+  remote: Counting objects:  72% (51/70)        
+  remote: Counting objects:  74% (52/70)        
+  remote: Counting objects:  75% (53/70)        
+  remote: Counting objects:  77% (54/70)        
+  remote: Counting objects:  78% (55/70)        
+  remote: Counting objects:  80% (56/70)        
+  remote: Counting objects:  81% (57/70)        
+  remote: Counting objects:  82% (58/70)        
+  remote: Counting objects:  84% (59/70)        
+  remote: Counting objects:  85% (60/70)        
+  remote: Counting objects:  87% (61/70)        
+  remote: Counting objects:  88% (62/70)        
+  remote: Counting objects:  90% (63/70)        
+  remote: Counting objects:  91% (64/70)        
+  remote: Counting objects:  92% (65/70)        
+  remote: Counting objects:  94% (66/70)        
+  remote: Counting objects:  95% (67/70)        
+  remote: Counting objects:  97% (68/70)        
+  remote: Counting objects:  98% (69/70)        
+  remote: Counting objects: 100% (70/70)        
+  remote: Counting objects: 100% (70/70), done.        
+  remote: Compressing objects:   1% (1/57)        
+  remote: Compressing objects:   3% (2/57)        
+  remote: Compressing objects:   5% (3/57)        
+  remote: Compressing objects:   7% (4/57)        
+  remote: Compressing objects:   8% (5/57)        
+  remote: Compressing objects:  10% (6/57)        
+  remote: Compressing objects:  12% (7/57)        
+  remote: Compressing objects:  14% (8/57)        
+  remote: Compressing objects:  15% (9/57)        
+  remote: Compressing objects:  17% (10/57)        
+  remote: Compressing objects:  19% (11/57)        
+  remote: Compressing objects:  21% (12/57)        
+  remote: Compressing objects:  22% (13/57)        
+  remote: Compressing objects:  24% (14/57)        
+  remote: Compressing objects:  26% (15/57)        
+  remote: Compressing objects:  28% (16/57)        
+  remote: Compressing objects:  29% (17/57)        
+  remote: Compressing objects:  31% (18/57)        
+  remote: Compressing objects:  33% (19/57)        
+  remote: Compressing objects:  35% (20/57)        
+  remote: Compressing objects:  36% (21/57)        
+  remote: Compressing objects:  38% (22/57)        
+  remote: Compressing objects:  40% (23/57)        
+  remote: Compressing objects:  42% (24/57)        
+  remote: Compressing objects:  43% (25/57)        
+  remote: Compressing objects:  45% (26/57)        
+  remote: Compressing objects:  47% (27/57)        
+  remote: Compressing objects:  49% (28/57)        
+  remote: Compressing objects:  50% (29/57)        
+  remote: Compressing objects:  52% (30/57)        
+  remote: Compressing objects:  54% (31/57)        
+  remote: Compressing objects:  56% (32/57)        
+  remote: Compressing objects:  57% (33/57)        
+  remote: Compressing objects:  59% (34/57)        
+  remote: Compressing objects:  61% (35/57)        
+  remote: Compressing objects:  63% (36/57)        
+  remote: Compressing objects:  64% (37/57)        
+  remote: Compressing objects:  66% (38/57)        
+  remote: Compressing objects:  68% (39/57)        
+  remote: Compressing objects:  70% (40/57)        
+  remote: Compressing objects:  71% (41/57)        
+  remote: Compressing objects:  73% (42/57)        
+  remote: Compressing objects:  75% (43/57)        
+  remote: Compressing objects:  77% (44/57)        
+  remote: Compressing objects:  78% (45/57)        
+  remote: Compressing objects:  80% (46/57)        
+  remote: Compressing objects:  82% (47/57)        
+  remote: Compressing objects:  84% (48/57)        
+  remote: Compressing objects:  85% (49/57)        
+  remote: Compressing objects:  87% (50/57)        
+  remote: Compressing objects:  89% (51/57)        
+  remote: Compressing objects:  91% (52/57)        
+  remote: Compressing objects:  92% (53/57)        
+  remote: Compressing objects:  94% (54/57)        
+  remote: Compressing objects:  96% (55/57)        
+  remote: Compressing objects:  98% (56/57)        
+  remote: Compressing objects: 100% (57/57)        
+  remote: Compressing objects: 100% (57/57), done.        
+  remote: Total 70 (delta 5), reused 43 (delta 1), pack-reused 0        
+  From https://github.com/griffinnewbold/COMS-4156-App
+   * [new ref]         d4e13ef82a1af5cfcd94b0b0c08d5ef302a1e2fb -> origin/main
+Determining the checkout info
+Checking out the ref
+  /usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+  Switched to a new branch 'main'
+  branch 'main' set up to track 'origin/main'.
+/usr/bin/git log -1 --format='%H'
+'d4e13ef82a1af5cfcd94b0b0c08d5ef302a1e2fb'
+
+Set up JDK 17
+-------------
+Run actions/setup-java@v3
+  with:
+    java-version: 17
+    distribution: temurin
+    cache: maven
+    java-package: jdk
+    check-latest: false
+    server-id: github
+    server-username: GITHUB_ACTOR
+    server-password: GITHUB_TOKEN
+    overwrite-settings: true
+    job-status: success
+    token: ***
+Installed distributions
+  Resolved Java 17.0.9+9 from tool-cache
+  Setting Java 17.0.9+9 as the default
+  Creating toolchains.xml for JDK version 17 from temurin
+  Writing to /home/runner/.m2/toolchains.xml
+  
+  Java configuration:
+    Distribution: temurin
+    Version: 17.0.9+9
+    Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.9-9/x64
+  
+Creating settings.xml with server-id: github
+Writing to /home/runner/.m2/settings.xml
+Received 37748736 of 123809700 (30.5%), 36.0 MBs/sec
+Received 123809700 of 123809700 (100.0%), 73.0 MBs/sec
+Cache Size: ~118 MB (123809700 B)
+/usr/bin/tar -z -xf /home/runner/work/_temp/13caf112-d16b-4582-9fc0-730eace21a3f/cache.tgz -P -C /home/runner/work/COMS-4156-App/COMS-4156-App
+Cache restored successfully
+Cache restored from key: setup-java-Linux-maven-b28433a206ff205f341241a52c4ed73a1cd2e414faec3247fcb683a6250cb1c7
+
+Build with Maven
+----------------
+Run mvn -B package --file pom.xml
+  mvn -B package --file pom.xml
+  shell: /usr/bin/bash -e {0}
+  env:
+    JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.9-9/x64
+    JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.9-9/x64
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------< com.dev.sweproject:ClientApplication >----------------
+[INFO] Building ClientApplication 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.2.0:check (validate) @ ClientApplication ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.11:prepare-agent (default) @ ClientApplication ---
+[INFO] argLine set to -javaagent:/home/runner/.m2/repository/org/jacoco/org.jacoco.agent/0.8.11/org.jacoco.agent-0.8.11-runtime.jar=destfile=/home/runner/work/COMS-4156-App/COMS-4156-App/ClientApplication/target/jacoco.exec
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:resources (default-resources) @ ClientApplication ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 15 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:compile (default-compile) @ ClientApplication ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 7 source files with javac [debug release 17] to target/classes
+[INFO] /home/runner/work/COMS-4156-App/COMS-4156-App/ClientApplication/src/main/java/com/dev/sweproject/FirebaseConfig.java: /home/runner/work/COMS-4156-App/COMS-4156-App/ClientApplication/src/main/java/com/dev/sweproject/FirebaseConfig.java uses or overrides a deprecated API.
+[INFO] /home/runner/work/COMS-4156-App/COMS-4156-App/ClientApplication/src/main/java/com/dev/sweproject/FirebaseConfig.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:testResources (default-testResources) @ ClientApplication ---
+[INFO] skip non existing resourceDirectory /home/runner/work/COMS-4156-App/COMS-4156-App/ClientApplication/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:testCompile (default-testCompile) @ ClientApplication ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 2 source files with javac [debug release 17] to target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0:test (default-test) @ ClientApplication ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.dev.sweproject.FirebaseTests
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+04:14:09.225 [main] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.5)
+
+2023-11-30T04:14:09.901Z  INFO 1818 --- [           main] com.dev.sweproject.FirebaseTests         : Starting FirebaseTests using Java 17.0.9 with PID 1818 (started by runner in /home/runner/work/COMS-4156-App/COMS-4156-App/ClientApplication)
+2023-11-30T04:14:09.903Z  INFO 1818 --- [           main] com.dev.sweproject.FirebaseTests         : No active profile set, falling back to 1 default profile: "default"
+2023-11-30T04:14:12.550Z  INFO 1818 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-11-30T04:14:13.008Z  INFO 1818 --- [           main] com.dev.sweproject.FirebaseTests         : Started FirebaseTests in 3.818 seconds (process running for 6.629)
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+Collection created successfully: testCollection
+Data added successfully.
+Data added successfully.
+Data removed successfully.
+Value was changed successfully: newTestValue
+The value has been successfully retrieved
+newTestValue
+Successfully caught: java.util.concurrent.ExecutionException: java.lang.RuntimeException: Value not found.
+aZ2
+aZ2
+Data added successfully.
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.407 s - in com.dev.sweproject.FirebaseTests
+[INFO] Running com.dev.sweproject.UserTests
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.08 s - in com.dev.sweproject.UserTests
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.11:report (report) @ ClientApplication ---
+[INFO] Loading execution data file /home/runner/work/COMS-4156-App/COMS-4156-App/ClientApplication/target/jacoco.exec
+[INFO] Analyzed bundle 'ClientApplication' with 11 classes
+[INFO] 
+[INFO] --- maven-jar-plugin:3.3.0:jar (default-jar) @ ClientApplication ---
+[INFO] Building jar: /home/runner/work/COMS-4156-App/COMS-4156-App/ClientApplication/target/ClientApplication-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:3.1.5:repackage (repackage) @ ClientApplication ---
+[INFO] Replacing main artifact /home/runner/work/COMS-4156-App/COMS-4156-App/ClientApplication/target/ClientApplication-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /home/runner/work/COMS-4156-App/COMS-4156-App/ClientApplication/target/ClientApplication-0.0.1-SNAPSHOT.jar.original
+[INFO] 
+[INFO] --- maven-assembly-plugin:3.6.0:single (default) @ ClientApplication ---
+[INFO] Building jar: /home/runner/work/COMS-4156-App/COMS-4156-App/ClientApplication/target/ClientApplication-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  36.328 s
+[INFO] Finished at: 2023-11-30T04:14:33Z
+[INFO] ------------------------------------------------------------------------
+
+Run JUnit tests with Maven
+--------------------------
+Run mvn test
+  mvn test
+  shell: /usr/bin/bash -e {0}
+  env:
+    JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.9-9/x64
+    JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.9-9/x64
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------< com.dev.sweproject:ClientApplication >----------------
+[INFO] Building ClientApplication 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.2.0:check (validate) @ ClientApplication ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.11:prepare-agent (default) @ ClientApplication ---
+[INFO] argLine set to -javaagent:/home/runner/.m2/repository/org/jacoco/org.jacoco.agent/0.8.11/org.jacoco.agent-0.8.11-runtime.jar=destfile=/home/runner/work/COMS-4156-App/COMS-4156-App/ClientApplication/target/jacoco.exec
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:resources (default-resources) @ ClientApplication ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 15 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:compile (default-compile) @ ClientApplication ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:testResources (default-testResources) @ ClientApplication ---
+[INFO] skip non existing resourceDirectory /home/runner/work/COMS-4156-App/COMS-4156-App/ClientApplication/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:testCompile (default-testCompile) @ ClientApplication ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0:test (default-test) @ ClientApplication ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.dev.sweproject.FirebaseTests
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+04:14:41.436 [main] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.5)
+
+2023-11-30T04:14:41.937Z  INFO 1930 --- [           main] com.dev.sweproject.FirebaseTests         : Starting FirebaseTests using Java 17.0.9 with PID 1930 (started by runner in /home/runner/work/COMS-4156-App/COMS-4156-App/ClientApplication)
+2023-11-30T04:14:41.939Z  INFO 1930 --- [           main] com.dev.sweproject.FirebaseTests         : No active profile set, falling back to 1 default profile: "default"
+2023-11-30T04:14:44.594Z  INFO 1930 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-11-30T04:14:45.072Z  INFO 1930 --- [           main] com.dev.sweproject.FirebaseTests         : Started FirebaseTests in 3.66 seconds (process running for 6.005)
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+Collection created successfully: testCollection
+Data added successfully.
+Data added successfully.
+Data removed successfully.
+Value was changed successfully: newTestValue
+The value has been successfully retrieved
+newTestValue
+Successfully caught: java.util.concurrent.ExecutionException: java.lang.RuntimeException: Value not found.
+aZ2
+aZ2
+Data added successfully.
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.22 s - in com.dev.sweproject.FirebaseTests
+[INFO] Running com.dev.sweproject.UserTests
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.052 s - in com.dev.sweproject.UserTests
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.11:report (report) @ ClientApplication ---
+[INFO] Loading execution data file /home/runner/work/COMS-4156-App/COMS-4156-App/ClientApplication/target/jacoco.exec
+[INFO] Analyzed bundle 'ClientApplication' with 11 classes
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  14.702 s
+[INFO] Finished at: 2023-11-30T04:14:49Z
+[INFO] ------------------------------------------------------------------------
+
+ReportGenerator
+---------------
+Run danielpalme/ReportGenerator-GitHub-Action@5.2.0
+  with:
+    reports: ClientApplication/target/site/jacoco/jacoco.xml
+    reporttypes: HtmlInline;Cobertura;TextSummary
+    sourcedirs: ClientApplication/src/main/java/com/dev/sweproject
+    title: JaCoCo code coverage report
+    targetdir: coveragereport
+    toolpath: reportgeneratortool
+    assemblyfilters: +*
+    classfilters: +*
+    filefilters: +*
+    verbosity: Info
+    tag: 73_7041920247
+  env:
+    JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.9-9/x64
+    JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.9-9/x64
+Detecting .NET Core SDK
+/usr/bin/dotnet --version
+8.0.100
+Detected .NET Core SDK version '8.0.100
+'
+Installing ReportGenerator global tool (https://www.nuget.org/packages/dotnet-reportgenerator-globaltool)
+/usr/bin/dotnet tool install dotnet-reportgenerator-globaltool --tool-path reportgeneratortool --version 5.2.0 --ignore-failed-sources
+Skipping NuGet package signature verification.
+You can invoke the tool using the following command: reportgenerator
+Tool 'dotnet-reportgenerator-globaltool' (version '5.2.0') was successfully installed.
+Successfully installed ReportGenerator global tool
+Executing ReportGenerator
+/home/runner/work/COMS-4156-App/COMS-4156-App/reportgeneratortool/reportgenerator -reports:ClientApplication/target/site/jacoco/jacoco.xml -targetdir:coveragereport -reporttypes:HtmlInline;Cobertura;TextSummary -sourcedirs:ClientApplication/src/main/java/com/dev/sweproject -historydir: -plugins: -assemblyfilters:+* -classfilters:+* -filefilters:+* -verbosity:Info -title:JaCoCo code coverage report -tag:73_7041920247 -license:
+2023-11-30T04:15:00: Writing report file 'coveragereport/Cobertura.xml'
+2023-11-30T04:15:00: Writing report file 'coveragereport/index.html'
+2023-11-30T04:15:00: Writing report file 'coveragereport/Summary.txt'
+2023-11-30T04:15:00: Report generation took 0.4 seconds
+Successfully executed ReportGenerator
+
+JaCoCoSummary
+-------------
+Run cat coveragereport/Summary.txt
+  cat coveragereport/Summary.txt
+  shell: /usr/bin/bash -e {0}
+  env:
+    JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.9-9/x64
+    JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.9-9/x64
+Summary - JaCoCo code coverage report
+  Generated on: 11/30/2023 - 04:15:00
+  Coverage date: 11/30/2023 - 04:14:06
+  Parser: JaCoCo
+  Assemblies: 1
+  Classes: 7
+  Files: 7
+  Line coverage: 36.0%
+  Covered lines: 124
+  Uncovered lines: 220
+  Coverable lines: 344
+  Total lines: 1348
+  Branch coverage: 40.2% (33 of 82)
+  Covered branches: 33
+  Total branches: 82
+  Method coverage: 43.1% (38 of 88)
+  Covered methods: 38
+  Total methods: 88
+  Tag: 73_7041920247
+
+com/dev/sweproject                            36.0%
+  com/dev/sweproject/ByteArrayMultipartFile    0.0%
+  com/dev/sweproject/ClientApplication        11.1%
+  com/dev/sweproject/FirebaseConfig          100.0%
+  com/dev/sweproject/FirebaseService          76.8%
+  com/dev/sweproject/GlobalInfo                0.0%
+  com/dev/sweproject/MainController            0.5%
+  com/dev/sweproject/User                    100.0%
+
+Post Set up JDK 17
+------------------
+Post job cleanup.
+Cache hit occurred on the primary key setup-java-Linux-maven-b28433a206ff205f341241a52c4ed73a1cd2e414faec3247fcb683a6250cb1c7, not saving cache.
+
+Post Run actions/checkout@v3
+----------------------------
+Post job cleanup.
+/usr/bin/git version
+git version 2.43.0
+Temporarily overriding HOME='/home/runner/work/_temp/c9e4ba4f-4076-4080-a19d-0989745be792' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+/usr/bin/git config --global --add safe.directory /home/runner/work/COMS-4156-App/COMS-4156-App
+/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+http.https://github.com/.extraheader
+/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+
+Complete job
+------------
+Cleaning up orphan processes
