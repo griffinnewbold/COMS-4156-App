@@ -39,10 +39,11 @@ In order to build and use our service you must install the following (This guide
 4. When you open IntelliJ you have the option to clone from a GitHub repo, click the green code button and copy the http line that is provided there and give it to your IDE to clone.
 5. Once the entire project is cloned into a directory of your choice please open in IntelliJ as a project the <code>ClientApplication</code> folder specifically.
 6. Go into <code>GlobalInfo.java</code> and alter the <code>SERVICE_IP</code> constant with the IP of the service, by default it assumes local host, if running a cloud based instance of the service please use that address instead keep the format consistent: "http://IP"
-7. Please make sure you followed the Build Instructions on the other linked repository first, as the service must be operational prior to launching the client app.
-8. You can then build the application by using <code>mvn -B package --file pom.xml</code> in the terminal and then execute the ClientApplication.java file to launch the app.
-9. The web app can be accessed at localhost:8081 so once you confirm the code is running navigate there in your browser to begin interacting with the web app.
-10. You can run checkstyle by using the <code>mvn checkstyle:checkstyle</code> or the <code>mvn checkstyle:check</code> commands in the terminal.
+7. While still in <code>GlobalInfo.java</code> you can either alter the <code>NETWORK_ID</code> constant directly prior to first execution or after first execution follow the UI to generate a network id, copy the presented key and then alter the constant and restart the code prior to extensive use.
+8. Please make sure you followed the Build Instructions on the other linked repository first, as the service must be operational prior to launching the client app.
+9. You can then build the application by using <code>mvn -B package --file pom.xml</code> in the terminal and then execute the ClientApplication.java file to launch the app.
+10. The web app can be accessed at localhost:8081 so once you confirm the code is running navigate there in your browser to begin interacting with the web app.
+11. You can run checkstyle by using the <code>mvn checkstyle:checkstyle</code> or the <code>mvn checkstyle:check</code> commands in the terminal.
 
 ## Running Tests
 We have a large suite of tests located in the 'src/test' directory, you can right click any of those .java files and click run to see the suite of tests execute, all tests execute by running <code>mvn -B package --file pom.xml</code> command in the
