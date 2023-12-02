@@ -130,6 +130,12 @@ function upload()
 
     // Get doc contents from filepicker
     const file = filepicker.files[0];
+
+    if (file.size > 1000000) {
+        alert("This file is too large. Please select a file smaller than 1000 KB.");
+        return;
+    }
+
     const reader = new FileReader();
     let contents = '';
     reader.onload = (e) => {
