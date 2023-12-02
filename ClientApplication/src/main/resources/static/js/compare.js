@@ -3,7 +3,7 @@ let to_doc = {}
 
 function goback()
 {
-    location.href = "document?user_id=" + encodeURIComponent(user_id) + "&doc_id=" + encodeURIComponent(doc_id);
+    location.href = "document?doc_id=" + encodeURIComponent(doc_id);
 }
 
 function fetch_diffs()

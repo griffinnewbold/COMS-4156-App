@@ -13,7 +13,7 @@
     <script th:inline="javascript">
       let params = new URLSearchParams(window.location.search);
       let tmp_user_id = /*[${user_id}]*/ "";
-      const user_id = (((tmp_user_id == null) || (tmp_user_id.length == 0)) ? params.get('user_id') : tmp_user_id);
+      const user_id = (((tmp_user_id == null) || (tmp_user_id.length == 0)) ? localStorage.getItem('user-id') : tmp_user_id);
 
       const doc_id = params.get('doc_id');
 

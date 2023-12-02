@@ -2,7 +2,7 @@ let data = {}
 
 function goback()
 {
-    location.href = "dashboard?user_id=" + user_id;
+    location.href = "dashboard";
 }
 
 function load_providers()
@@ -255,8 +255,7 @@ function compare_documents()
     }
     console.log("Comparing with: " + compare_val);
 
-    location.href = ("compare?user_id=" + encodeURIComponent(user_id)
-                     + "&from_doc_id=" + encodeURIComponent(doc_id)
+    location.href = ("compare?from_doc_id=" + encodeURIComponent(doc_id)
                      + "&to_doc_name=" + encodeURIComponent(compare_val));
 }
 

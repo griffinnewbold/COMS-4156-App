@@ -79,9 +79,15 @@
   <script th:inline="javascript">
       let params = new URLSearchParams(window.location.search);
       let tmp_user_id = /*[[${user_id}]]*/ "";
-      const user_id = (((tmp_user_id == null) || (tmp_user_id.length == 0)) ? params.get('user_id') : tmp_user_id);
+      const user_id = (((tmp_user_id == null) || (tmp_user_id.length == 0)) ? localStorage.getItem('user-id') : tmp_user_id);
       document.getElementById('user-id').innerText = user_id;
       console.log("User_id: " + user_id);
+
+      // store user ID locally
+      let tmp_ls_user_id = localStorage.getItem("user-id");
+      if (tmp_ls_user_id === null || tmp_ls_user_id.length <= 0) {
+        localStorage.setItem("user-id", user_id);
+      }
   </script>
 </body>
 

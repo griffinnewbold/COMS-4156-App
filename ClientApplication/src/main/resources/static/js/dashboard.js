@@ -26,7 +26,7 @@ function render_docs(filter_string)
         }
 
         doc_html += '<div class="col-md-3">';
-        doc_html += '<a href=document?user_id=' + user_id + '&doc_id=' + id + '>'
+        doc_html += '<a href=document?doc_id=' + id + '>'
         doc_html += '<div class="doc-link"><br>'
         doc_html += '<div class="doc-image">'
         doc_html += '<p class="preview-data">' + contents + '</p>'
@@ -77,6 +77,7 @@ function fetch_docs()
 
 function logout()
 {
+    localStorage.removeItem("user-id");
     location.href = "/";
 }
 
@@ -99,8 +100,6 @@ function upload()
         return;
     }
 
-    // TODO: make sure this name doesnt already identify a document? OR what happens if it does? it's ok if it just updates
-
     // Get doc contents from filepicker
     const file = filepicker.files[0];
     const reader = new FileReader();
@@ -119,7 +118,7 @@ function upload()
             }
             console.log("Upload response: " + xhr.responseText);
 
-            location.reload();
+            location.href = 'dashboard';
         };
         xhr.open("POST", "/upload-document?user_id=" + encodeURIComponent(user_id)
             + "&doc_name=" + encodeURIComponent(name)
