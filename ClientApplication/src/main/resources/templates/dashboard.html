@@ -1,94 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="ISO-8859-1">
-    <title>My Documents</title>
-    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
-    <script src="../static/js/jquery-3.3.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
-    <link rel="stylesheet" href="../static/css/dashboard.css">
-	<script th:src="@{/js/dashboard.js}"></script>
-	<script src="../static/js/dashboard.js"></script>
+  <meta charset="ISO-8859-1">
+  <title>My Documents</title>
+  <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+  <script src="../static/js/jquery-3.3.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+  <link rel="stylesheet" href="../static/css/dashboard.css">
+  <script th:src="@{/js/dashboard.js}"></script>
+  <script src="../static/js/dashboard.js"></script>
 </head>
 
 <body>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <h1>Welcome <span id="user-id"></span>!</h1>
-      </div>
-      <div class="col-md-8">
-        <div id="upload">
-          
-          <div class="row">
-            <div class="col-sm-2">
-              <h3>Upload</h3>
-            </div>
-            <div class="col-sm-3">
-              <input type="file" id="filepicker">
-            </div>
-            <div class="col-sm-3">
-              <input type="text" id="name" placeholder="Document name">
-            </div>
-            <div class="col-sm-3">
-              <button type="button" id="upload-button" onclick="upload()">Upload</button>
-            </div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <h1>Welcome <span id="user-id"></span>!</h1>
+    </div>
+    <div class="col-md-8">
+      <div id="upload">
+        <div class="row">
+          <div class="col-sm-2">
+            <h3>Upload</h3>
           </div>
-
-        </div>
-
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-md-4">
-        <h3 id="ur-docs">Documents</h3>
-      </div>
-      <div class="col-md-4">
-        <input type="text" id="searchbox" placeholder="Search..." oninput="search()">
-      </div>
-      <div class="col-md-4">
-        <button type="button" id="logout" onclick="logout()">Logout</button>
-      </div>
-    </div>
-    <hr>
-
-    <div id="docs-container">
-      <!-- In practice, this will be populated dynamically, with a dynamic link URL and name.
-           For now, it's static for mock testing. -->
-      <!-- BEGIN dynamically generated section -->
-
-      <div class="row">
-        <div class="col-md-3">
-          <a href="document.html?id=TMP">
-            <div class="doc-link">
-              <br>
-              <div class="doc-image"></div>
-              <br>
-              <p>Document Name</p>
-            </div>
-          </a>
+          <div class="col-sm-3">
+            <input type="file" id="filepicker" accept=".txt"> <!-- Updated line -->
+          </div>
+          <div class="col-sm-3">
+            <input type="text" id="name" placeholder="Document name">
+          </div>
+          <div class="col-sm-3">
+            <button type="button" id="upload-button" onclick="upload()">Upload</button>
+          </div>
         </div>
       </div>
-
-      <!-- END dynamically generated section -->
     </div>
   </div>
-  <script th:inline="javascript">
-      let params = new URLSearchParams(window.location.search);
-      let tmp_user_id = /*[[${user_id}]]*/ "";
-      const user_id = (((tmp_user_id == null) || (tmp_user_id.length == 0)) ? localStorage.getItem('user-id') : tmp_user_id);
-      document.getElementById('user-id').innerText = user_id;
-      console.log("User_id: " + user_id);
+  <br>
+  <div class="row">
+    <div class="col-md-4">
+      <h3 id="ur-docs">Documents</h3>
+    </div>
+    <div class="col-md-4">
+      <input type="text" id="searchbox" placeholder="Search..." oninput="search()">
+    </div>
+    <div class="col-md-4">
+      <button type="button" id="logout" onclick="logout()">Logout</button>
+    </div>
+  </div>
+  <hr>
 
-      // store user ID locally
-      let tmp_ls_user_id = localStorage.getItem("user-id");
-      if (tmp_ls_user_id === null || tmp_ls_user_id.length <= 0) {
-        localStorage.setItem("user-id", user_id);
-      }
-  </script>
+  <div id="docs-container">
+    <!-- In practice, this will be populated dynamically -->
+    <div class="row">
+      <div class="col-md-3">
+        <a href="document.html?id=TMP">
+          <div class="doc-link">
+            <br>
+            <div class="doc-image"></div>
+            <br>
+            <p>Document Name</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<script th:inline="javascript">
+  let params = new URLSearchParams(window.location.search);
+  let tmp_user_id = /*[[${user_id}]]*/ "";
+  const user_id = (((tmp_user_id == null) || (tmp_user_id.length == 0)) ? localStorage.getItem('user-id') : tmp_user_id);
+  document.getElementById('user-id').innerText = user_id;
+  console.log("User_id: " + user_id);
+
+  // store user ID locally
+  let tmp_ls_user_id = localStorage.getItem("user-id");
+  if (tmp_ls_user_id === null || tmp_ls_user_id.length <= 0) {
+    localStorage.setItem("user-id", user_id);
+  }
+</script>
 </body>
-
 </html>
