@@ -102,6 +102,13 @@ function upload()
 
     // Get doc contents from filepicker
     const file = filepicker.files[0];
+
+    //checking if file size exceeds 1000 kd
+    if (file.size > 1000000) { // size in bytes
+        alert("File size exceeds the maximum limit of 1000 KB.");
+        return;
+    }
+
     const reader = new FileReader();
     let contents = '';
     reader.onload = (e) => {
