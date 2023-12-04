@@ -83,7 +83,6 @@ public class FirebaseService {
       public void onDataChange(DataSnapshot dataSnapshot) {
         if (dataSnapshot.exists()) {
           String storedPassword = dataSnapshot.child("password").getValue(String.class);
-          System.out.println(storedPassword);
           if (storedPassword != null && storedPassword.equals(password)) {
             future.complete(true);
           } else {
@@ -278,7 +277,6 @@ public class FirebaseService {
         Object value = dataSnapshot.getValue();
         if (value != null) {
           System.out.println("The value has been successfully retrieved");
-          System.out.println(value.toString());
           future.complete(value);
         } else {
           future.completeExceptionally(new RuntimeException("Value not found."));

@@ -9,10 +9,10 @@ function load_providers()
 {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
-        if (xhr.readyState != 4) {
+        if (xhr.readyState !== 4) {
             return;
         }
-        if (xhr.status != 200) {
+        if (xhr.status !== 200) {
             alert("Server error: " + xhr.statusText);
             return;
         }
@@ -37,10 +37,10 @@ function load_doc_stats()
 {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
-        if (xhr.readyState != 4) {
+        if (xhr.readyState !== 4) {
             return;
         }
-        if (xhr.status != 200) {
+        if (xhr.status !== 200) {
             alert("Server error: " + xhr.statusText);
             return;
         }
@@ -49,7 +49,7 @@ function load_doc_stats()
         let stats = '';
         for (let i = 1; i < stats_lines.length; i++) {
             stats += stats_lines[i];
-            if (i != stats_lines.length - 1) stats += '\n';
+            if (i !== stats_lines.length - 1) stats += '\n';
         }
 
         $('#stats-data').html(stats);
@@ -123,6 +123,8 @@ function download_latest()
 function upload()
 {
     const filepicker = document.getElementById('filepicker');
+
+
     if (filepicker.files.length == 0) {
         alert("You must select a file to upload.");
         return;
@@ -130,6 +132,12 @@ function upload()
 
     // Get doc contents from filepicker
     const file = filepicker.files[0];
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+
+    if (fileExtension !== 'txt') {
+        alert("Your selection must be a txt file.")
+        return;
+    }
 
     if (file.size > 1000000) {
         alert("This file is too large. Please select a file smaller than 1000 KB.");
@@ -144,10 +152,10 @@ function upload()
 
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
-            if (xhr.readyState != 4) {
+            if (xhr.readyState !== 4) {
                 return;
             }
-            if (xhr.status != 200) {
+            if (xhr.status !== 200) {
                 alert("Server error: " + xhr.statusText);
                 return;
             }
@@ -175,10 +183,10 @@ function share()
 
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
-        if (xhr.readyState != 4) {
+        if (xhr.readyState !== 4) {
             return;
         }
-        if (xhr.status != 200) {
+        if (xhr.status !== 200) {
             alert("Server error: " + xhr.statusText);
             return;
         }
@@ -197,10 +205,10 @@ function delete_doc()
 {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
-        if (xhr.readyState != 4) {
+        if (xhr.readyState !== 4) {
             return;
         }
-        if (xhr.status != 200) {
+        if (xhr.status !== 200) {
             alert("Server error: " + xhr.statusText);
             return;
         }
@@ -220,10 +228,10 @@ function load_document()
 
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
-        if (xhr.readyState != 4) {
+        if (xhr.readyState !== 4) {
             return;
         }
-        if (xhr.status != 200) {
+        if (xhr.status !== 200) {
             alert("Server error: " + xhr.statusText);
             return;
         }
@@ -233,7 +241,7 @@ function load_document()
         // is this efficient? no. is it fine for our purposes? yes.
         let found_doc = false;
         for (let i = 0; i < docs.length; i++) {
-            if (doc_id != docs[i]['docId']) {
+            if (doc_id !== docs[i]['docId']) {
                 continue;
             } else {
                 data = docs[i];
@@ -269,10 +277,10 @@ function load_documents_for_comparison()
 {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
-        if (xhr.readyState != 4) {
+        if (xhr.readyState !== 4) {
             return;
         }
-        if (xhr.status != 200) {
+        if (xhr.status !== 200) {
             alert("Server error: " + xhr.statusText);
             return;
         }

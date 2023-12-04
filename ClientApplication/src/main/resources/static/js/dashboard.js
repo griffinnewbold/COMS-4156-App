@@ -17,9 +17,9 @@ function render_docs(filter_string)
             }
         }
 
-        let new_row = (rendered % 4 == 0);
+        let new_row = (rendered % 4 === 0);
         if (new_row) {
-            if (rendered != 0) {
+            if (rendered !== 0) {
                 doc_html += '</div>';
             }
             doc_html += '<div class="row">';
@@ -52,10 +52,10 @@ function fetch_docs()
     console.log("Loading documents...");
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
-        if (xhr.readyState != 4) {
+        if (xhr.readyState !== 4) {
             return;
         }
-        if (xhr.status != 200) {
+        if (xhr.status !== 200) {
             alert("Server error: " + xhr.statusText);
             return;
         }
@@ -89,19 +89,26 @@ function upload()
     // 3. try and upload!
 
     const filepicker = document.getElementById('filepicker');
-    if (filepicker.files.length == 0) {
+
+    if (filepicker.files.length === 0) {
         alert("You must select a document to upload.");
         return;
     }
 
     let name = $('#name').val();
-    if (name.length == 0) {
+    if (name.length === 0) {
         alert("You must provide a name for your document to upload.");
         return;
     }
 
     // Get doc contents from filepicker
     const file = filepicker.files[0];
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+
+    if (fileExtension !== 'txt') {
+        alert("Your selection must be a txt file.")
+        return;
+    }
 
     //checking if file size exceeds 1000 kd
     if (file.size > 1000000) { // size in bytes
@@ -116,10 +123,10 @@ function upload()
 
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
-            if (xhr.readyState != 4) {
+            if (xhr.readyState !== 4) {
                 return;
             }
-            if (xhr.status != 200) {
+            if (xhr.status !== 200) {
                 alert("Server error: " + xhr.statusText);
                 return;
             }

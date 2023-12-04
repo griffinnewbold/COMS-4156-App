@@ -275,7 +275,6 @@ public class MainController {
     boolean isValid = User.isValidUser(user);
 
     if (isValid) {
-      System.out.println(user);
       return registerUser(user);
     }
 
