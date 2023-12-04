@@ -21,7 +21,7 @@ All of that and how our app specifically works with our service is described in 
     * Compare with another document: Choose another document from the dropdown and click Compare to be shown a comparison of the two documents as well as their contents.
     * Delete the document: Click the delete button to remove the document, be careful as once you click it, there is no going back!
 5. Search for a Specific Document: Type into the search bar keywords for your title and it will filter out any result that does not have at least a partial match. 
-6. Upload a brand new Document: Select a file and assign it a title and click upload! NOTE: There is a maxiumum file limit of 1000KB!!!!
+6. Upload a brand new Document: Select a file and assign it a title and click upload! NOTE: <code>.txt</code> files are the only ones accepted! There is a maxiumum file limit of 1000KB!!!!
 7. Logout: Standard Logout, returns you to the homepage of the webapp.
 ### How it works with our Service
 To begin we must acknowledge that there is a frontend and a backend (this is true of any app but I digress) When a user performs an action on the frontend a request is sent to the backend of our app, the backend then (if necessary) makes a call to our service
