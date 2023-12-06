@@ -22,7 +22,7 @@ public class GlobalInfo {
    * A String constant for the IP address of the service.
    * If you are hosting the service non locally please alter this prior to execution.
    */
-  public static final String SERVICE_IP = "http://127.0.0.1:8080";
+  public static final String SERVICE_IP = "http://34.86.161.172:8080";
 
   /**
    * A String constant for accessing a specific API endpoint: upload-doc.
@@ -83,7 +83,7 @@ public class GlobalInfo {
    * A String representing the specific client using the app.
    * IF YOU ARE TESTING FOR CONCURRENCY PLEASE ALTER THIS BEFORE RUNNING A NEW INSTANCE.
    */
-  public static final String NETWORK_ID = "QCO1700369101620";
+  public static final String NETWORK_ID = "secondIterationDemo";
 
   /**
    * Assigns the global variable for the database.
