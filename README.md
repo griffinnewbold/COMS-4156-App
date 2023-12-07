@@ -105,6 +105,7 @@ to be.
       Profession: Select any of the presented choices
       Click register
          - The expected result is the refresh of the page with a new red text below the form stating "Please fill in all fields properly!"
+         
    6d Fill out the registration form with the following information:
       Full Name: your name
       Email: your email
@@ -117,6 +118,7 @@ to be.
    
    7a Fill out the login information with invalid credentials and click login
          - The expected result is the refresh of the page with a new red text below the form stating "Invalid credentials"
+         
    7b Fill out the login information with the proper credentials of the user you registered in 6d
          - The expected result is the redirect to the dashboard page headlined with "Welcome username!"
    
@@ -163,7 +165,7 @@ to be.
 20b Click choose file and select the editted version and click upload. 
     - The expected result should be the refresh of the page with the new document contents in the preview window and updated document stats
 
-21 Click the previous version drop down and select the option presented and then click Download Version button to its immediate right
+21 Click the previous version drop down and select the '1' option presented and then click Download Version button to its immediate right
    - The expected result should be the document titled Eighth_v1.txt being downloaded to the executing computer
 
 22 Select the Compare Documents dropdown and select Third and then click the Compare button to its immediate right
